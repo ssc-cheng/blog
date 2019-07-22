@@ -95,17 +95,17 @@
   };
 </script>
 
-  <meta name="description" content="个人博客欢迎来到ssc的个人博客平台，此平台会推送有关python爬虫的案列等 导入的包1$ import requests  主要用于用户请求网页url链接 requests GET 请求例子123$ import requests$ url = r&quot;https://www.baidu.com&quot;$ res = requests.get(url)  请求百度的url链接，其中的res是返回一个状态">
+  <meta name="description" content="个人博客欢迎来到ssc的个人博客平台，此平台会推送有关python爬虫的案列等 安装requests模块1$ pip install requests  导入的包1$ import requests  主要用于用户请求网页url链接 requests GET 请求例子123$ import requests$ url = r&quot;https://www.baidu.com&quot;$ res = reques">
 <meta property="og:type" content="article">
 <meta property="og:title" content="requests基础操作">
 <meta property="og:url" content="http://yoursite.com/2019/07/22/requests基础操作/index.html">
 <meta property="og:site_name" content="Welcome to ssc bolg !">
-<meta property="og:description" content="个人博客欢迎来到ssc的个人博客平台，此平台会推送有关python爬虫的案列等 导入的包1$ import requests  主要用于用户请求网页url链接 requests GET 请求例子123$ import requests$ url = r&quot;https://www.baidu.com&quot;$ res = requests.get(url)  请求百度的url链接，其中的res是返回一个状态">
+<meta property="og:description" content="个人博客欢迎来到ssc的个人博客平台，此平台会推送有关python爬虫的案列等 安装requests模块1$ pip install requests  导入的包1$ import requests  主要用于用户请求网页url链接 requests GET 请求例子123$ import requests$ url = r&quot;https://www.baidu.com&quot;$ res = reques">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-22T12:53:21.699Z">
+<meta property="og:updated_time" content="2019-07-22T13:06:42.024Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="requests基础操作">
-<meta name="twitter:description" content="个人博客欢迎来到ssc的个人博客平台，此平台会推送有关python爬虫的案列等 导入的包1$ import requests  主要用于用户请求网页url链接 requests GET 请求例子123$ import requests$ url = r&quot;https://www.baidu.com&quot;$ res = requests.get(url)  请求百度的url链接，其中的res是返回一个状态">
+<meta name="twitter:description" content="个人博客欢迎来到ssc的个人博客平台，此平台会推送有关python爬虫的案列等 安装requests模块1$ pip install requests  导入的包1$ import requests  主要用于用户请求网页url链接 requests GET 请求例子123$ import requests$ url = r&quot;https://www.baidu.com&quot;$ res = reques">
 
 
 
@@ -326,7 +326,7 @@
                 
               
 
-              <time title="Erstellt: 2019-07-22 20:45:31 / Geändert am: 20:53:21" itemprop="dateCreated datePublished" datetime="2019-07-22T20:45:31+08:00">2019-07-22</time>
+              <time title="Erstellt: 2019-07-22 20:45:31 / Geändert am: 21:06:42" itemprop="dateCreated datePublished" datetime="2019-07-22T20:45:31+08:00">2019-07-22</time>
             </span>
           
 
@@ -371,6 +371,8 @@
 
       
         <h2 id="个人博客"><a href="#个人博客" class="headerlink" title="个人博客"></a>个人博客</h2><p>欢迎来到ssc的个人博客平台，此平台会推送有关python爬虫的案列等</p>
+<h3 id="安装requests模块"><a href="#安装requests模块" class="headerlink" title="安装requests模块"></a>安装requests模块</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install requests</span><br></pre></td></tr></table></figure>
+
 <h3 id="导入的包"><a href="#导入的包" class="headerlink" title="导入的包"></a>导入的包</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ import requests</span><br></pre></td></tr></table></figure>
 
 <p>主要用于用户请求网页url链接</p>
@@ -380,9 +382,19 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ html = res.text</span><br></pre></td></tr></table></figure>
 
 <p>html是打印出res的文本信息，显示网页源代码</p>
-<h3 id="requests-POST-请求例子"><a href="#requests-POST-请求例子" class="headerlink" title="requests POST 请求例子"></a>requests POST 请求例子</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ import requests</span><br><span class="line">$  说明: http://httpbin.org 是一个专门用于测试http请求网站</span><br><span class="line">$  data = &#123;</span><br><span class="line">$       <span class="string">'name'</span>:<span class="string">'ssc'</span></span><br><span class="line">$       &#125;</span><br><span class="line">$   response = requests.post(r<span class="string">'http://httpbin.org/post'</span>,data=data)</span><br><span class="line">$   <span class="built_in">print</span>(response.content.decode())</span><br></pre></td></tr></table></figure>
+<h3 id="requests-POST-请求例子"><a href="#requests-POST-请求例子" class="headerlink" title="requests POST 请求例子"></a>requests POST 请求例子</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line">说明: http://httpbin.org 是一个专门用于测试http请求网站</span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">'name'</span>:<span class="string">'ssc'</span></span><br><span class="line">    &#125;</span><br><span class="line">response = requests.post(r<span class="string">'http://httpbin.org/post'</span>,data=data)</span><br><span class="line"><span class="built_in">print</span>(response.content.decode())</span><br></pre></td></tr></table></figure>
 
 <p>如果是post请求则要携带data参数。</p>
+<h3 id="response的常用属性"><a href="#response的常用属性" class="headerlink" title="response的常用属性"></a>response的常用属性</h3><p>response = requests.get(url)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">response.text    显示网页源代码</span><br><span class="line">respones.content 二进制形式的响应数据</span><br><span class="line">response.status_code 响应状态吗</span><br><span class="line">response.headers 响应头</span><br><span class="line">response.request.headers 请求头</span><br></pre></td></tr></table></figure>
+
+<p>response.text 和response.content的区别</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">response.text</span><br><span class="line">类型：str</span><br><span class="line">解码类型： 根据HTTP头部对响应的编码作出有根据的推测，推测的文本编码</span><br><span class="line">如何修改编码方式：response.encoding=”gbk”</span><br><span class="line"></span><br><span class="line">response.content</span><br><span class="line">类型：bytes</span><br><span class="line">解码类型： 没有指定</span><br><span class="line">如何修改编码方式：response.content.deocde(“utf8”)</span><br><span class="line"></span><br><span class="line">更推荐使用response.content.deocde()的方式获取响应的html页面</span><br></pre></td></tr></table></figure>
+
+<h2 id="requests二进制写入数据"><a href="#requests二进制写入数据" class="headerlink" title="requests二进制写入数据"></a>requests二进制写入数据</h2><p>下载图片到本地</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 导入requests模块</span></span><br><span class="line">import requests</span><br><span class="line"><span class="comment"># 2. 发送请求获取二进制数据(bytes)</span></span><br><span class="line">respone =  requests.get(<span class="string">"http://imgsrc.baidu.com/image/c0%3Dpixel_huitu%2C0%2C0%2C294%2C40/sign=098c3f828cd6277ffd1f3a7841407a5c/3c6d55fbb2fb4316e3afd1432ba4462309f7d353.jpg"</span>)</span><br><span class="line"><span class="comment"># 获取二进制数据; 注意: 这里不要解码, 因为图片,视频等文件都是二进制的不是文本,不需要解码</span></span><br><span class="line"><span class="comment"># data = respone.content</span></span><br><span class="line"><span class="comment"># 3. 把数据写入文件</span></span><br><span class="line">with open(<span class="string">"壁纸.jpg"</span>, <span class="string">"wb"</span>) as f:</span><br><span class="line">    f.write(respone.content)</span><br></pre></td></tr></table></figure>
+
+<p>图片是利用二进制写入，拿取得数据通过.content进行二进制写入</p>
 
       
     </div>
@@ -426,10 +438,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/22/requests基础操作-1/" rel="prev" title="requests基础操作">
-                requests基础操作 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -499,7 +507,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">3</span>
           <span class="site-state-item-name">Artikel</span>
         </a>
       </div>
@@ -538,7 +546,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#个人博客"><span class="nav-number">1.</span> <span class="nav-text">个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导入的包"><span class="nav-number">1.1.</span> <span class="nav-text">导入的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requests-GET-请求例子"><span class="nav-number">1.2.</span> <span class="nav-text">requests GET 请求例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requests-POST-请求例子"><span class="nav-number">1.3.</span> <span class="nav-text">requests POST 请求例子</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#个人博客"><span class="nav-number">1.</span> <span class="nav-text">个人博客</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装requests模块"><span class="nav-number">1.1.</span> <span class="nav-text">安装requests模块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入的包"><span class="nav-number">1.2.</span> <span class="nav-text">导入的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requests-GET-请求例子"><span class="nav-number">1.3.</span> <span class="nav-text">requests GET 请求例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#requests-POST-请求例子"><span class="nav-number">1.4.</span> <span class="nav-text">requests POST 请求例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#response的常用属性"><span class="nav-number">1.5.</span> <span class="nav-text">response的常用属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#requests二进制写入数据"><span class="nav-number">2.</span> <span class="nav-text">requests二进制写入数据</span></a></li></ol></div>
             
 
           </div>
