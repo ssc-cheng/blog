@@ -88,9 +88,9 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     translation: {
-      copy_button: 'کپی',
-      copy_success: 'کپی شد',
-      copy_failure: 'کپی انجام نشد'
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
     }
   };
 </script>
@@ -197,7 +197,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="تغییر ناوبری">
+    <button aria-label="Navigationsleiste an/ausschalten">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -224,7 +224,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>صفحه اصلی</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
 
   </li>
         
@@ -240,7 +240,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>بایگانی</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
 
   </li>
 
@@ -326,17 +326,31 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-28 12:53:18" itemprop="dateCreated datePublished" datetime="2019-07-28T12:53:18+08:00">2019-07-28</time>
+              <time title="Erstellt: 2019-07-28 12:53:18" itemprop="dateCreated datePublished" datetime="2019-07-28T12:53:18+08:00">2019-07-28</time>
             </span>
           
 
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-07-29 11:12:40" itemprop="dateModified" datetime="2019-07-29T11:12:40+08:00">2019-07-29</time>
+              </span>
+            
           
 
           
@@ -375,7 +389,67 @@
       
         
           
-            
+            <h2 id="scrapy框架工作结构"><a href="#scrapy框架工作结构" class="headerlink" title="scrapy框架工作结构"></a>scrapy框架工作结构</h2><p>scrapy框架运行流程</p>
+<p>1、调度器把requests–&gt;引擎–&gt;下载中间件—&gt;下载器<br>2、下载器发送请求，获取响应—-&gt;下载中间件—-&gt;引擎—&gt;爬虫中间件—&gt;爬虫<br>3、爬虫提取url地址，组装成request对象—-&gt;爬虫中间件—&gt;引擎—&gt;调度器<br>4、爬虫提取数据—&gt;引擎—&gt;管道<br>5、管道进行数据的处理和保存</p>
+<p>scrapy中每个模块的作用</p>
+<p>引擎(engine)：负责数据和信号在不同模块间的传递<br>调度器(scheduler)：实现一个队列，存放引擎发过来的request请求对象<br>下载器(downloader)：发送引擎发过来的request请求，获取响应，并将响应交给引擎<br>爬虫(spider)：处理引擎发过来的response，提取数据，提取url，并交给引擎<br>管道(pipeline)：处理引擎传递过来的数据，比如存储<br>下载中间件(downloader middleware)：可以自定义的下载扩展，比如设置代理ip<br>爬虫中间件(spider middleware)：可以自定义request请求和进行response过滤</p>
+<h2 id="scrapy的安装"><a href="#scrapy的安装" class="headerlink" title="scrapy的安装"></a>scrapy的安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">安装scrapy命令：sudo apt-get install scrapy</span><br><span class="line"></span><br><span class="line">或者(推荐)：pip install scrapy</span><br><span class="line"></span><br><span class="line">注意: 如果 pip 对应的Python2, pip3 对应的Python3, 你如果需要把scrapy安装到Python3下,那么使用的命令就是: pip3 install scrapy</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建scrapy项目"><a href="#创建scrapy项目" class="headerlink" title="创建scrapy项目"></a>创建scrapy项目</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">创建scrapy项目的命令：scrapy startproject +&lt;项目名字&gt;</span><br><span class="line">示例：scrapy startproject myspider</span><br><span class="line"></span><br><span class="line">在项目路径下执行:scrapy genspider +&lt;爬虫名字&gt; + &lt;允许爬取的域名&gt;</span><br><span class="line">示例：</span><br><span class="line"><span class="built_in">cd</span> myspider</span><br><span class="line">scrapy genspider baidu baidu.cn</span><br></pre></td></tr></table></figure>
+
+<h2 id="编写爬虫前的准备"><a href="#编写爬虫前的准备" class="headerlink" title="编写爬虫前的准备"></a>编写爬虫前的准备</h2><h3 id="修改pipelines-py文件"><a href="#修改pipelines-py文件" class="headerlink" title="修改pipelines.py文件"></a>修改pipelines.py文件</h3><p>其中大部分的数据上传代码都在process_item方法执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">class BaiduPipeline(object):</span><br><span class="line">    <span class="comment"># 类名可自己定义</span></span><br><span class="line">    <span class="comment"># 爬虫文件中提取数据的方法每yield一次item，就会运行一次</span></span><br><span class="line">    <span class="comment"># 该方法为固定名称函数</span></span><br><span class="line">    def process_item(self, item, spider):  </span><br><span class="line">        <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-在settings-py设置开启pipeline"><a href="#2-在settings-py设置开启pipeline" class="headerlink" title="2. 在settings.py设置开启pipeline"></a>2. 在settings.py设置开启pipeline</h3><p>只有爬取的数据需要上传到数据库中的时候就要用到pipline,就需要到settings里进行配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ITEM_PIPELINES = &#123;</span><br><span class="line">    <span class="comment"># 键(key)  完整类名: 模块.类名</span></span><br><span class="line">    <span class="comment"># 值(优先级): 是一个0-1000的整数, 越小越先执行</span></span><br><span class="line">    <span class="string">'myspider.pipelines.BaiduPipeline'</span>: 400</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行scrapy"><a href="#运行scrapy" class="headerlink" title="运行scrapy"></a>运行scrapy</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">命令：在项目目录下执行scrapy crawl +&lt;爬虫名字&gt;</span><br><span class="line">示例：scrapy crawl baidu</span><br></pre></td></tr></table></figure>
+
+<h3 id="在运行时将数据导出为文件-Feed-exports"><a href="#在运行时将数据导出为文件-Feed-exports" class="headerlink" title="在运行时将数据导出为文件(Feed exports)"></a>在运行时将数据导出为文件(Feed exports)</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 输出JSON格式，默认为Unicode编码</span></span><br><span class="line">scrapy crawl baidu -o teachers.json</span><br><span class="line"><span class="comment"># 输出JSON Lines格式，默认为Unicode编码</span></span><br><span class="line">scrapy crawl baidu -o teachers.jsonlines</span><br><span class="line"><span class="comment"># 输出CSV格式，使用逗号表达式，可用Excel打开</span></span><br><span class="line">scrapy crawl baidu -o teachers.csv</span><br><span class="line"><span class="comment"># 输出XML格式</span></span><br><span class="line">scrapy crawl baidu -o teachers.xml</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">1、Scrapy的安装：pip install scrapy</span><br><span class="line">2、创建scrapy的项目: scrapy startproject myspider</span><br><span class="line">3、创建scrapy爬虫：在项目目录下执行 scrapy genspider baodu baidu.cn</span><br><span class="line">4、运行scrapy爬虫：在项目目录下执行 scrapy crawl baidu</span><br><span class="line">5、解析并获取scrapy爬虫中的数据：</span><br><span class="line">    response.xpath() 方法的返回结果是一个类似list的类型，其中包含的是selector对象，操作和列表一样，但是有一些额外的方法</span><br><span class="line">    extract() 返回一个包含有字符串的列表</span><br><span class="line">    extract_first() 返回列表中的第一个字符串，列表为空没有返回None</span><br><span class="line">6、scrapy管道的基本使用:</span><br><span class="line">    完善pipelines.py中的 process_item 函数</span><br><span class="line">    在settings.py中设置开启pipeline</span><br><span class="line">    ITEM_PIPELINES = &#123;</span><br><span class="line">        <span class="string">'myspider.pipelines.BaiduPipeline'</span>: 400</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="爬取猎聘网招聘信息"><a href="#爬取猎聘网招聘信息" class="headerlink" title="爬取猎聘网招聘信息"></a>爬取猎聘网招聘信息</h2><p>爬取猎聘网信息并上传到mongdb数据库中</p>
+<p>在创建好项目后再项目的settings.py中配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">ROBOTSTXT_OBEY = False  <span class="comment">#遵守robots . txt规则，默认是True，要改成False不然爬取不了</span></span><br><span class="line"></span><br><span class="line">ITEM_PIPELINES = &#123;      <span class="comment"># 因为上传数据库中，所以开启pipelines</span></span><br><span class="line">   <span class="comment"># 'lieping.pipelines.LiepingPipeline': 300,</span></span><br><span class="line">    <span class="string">'lieping.pipelines.LiePinMongodb'</span>: 300,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接数据库，因为我的mongodb有权限设置，所以在下面要进行用户名密码的配置</span></span><br><span class="line">user = <span class="string">"python"</span> </span><br><span class="line">password = <span class="string">"python"</span>  </span><br><span class="line">host = <span class="string">"106.12.xxx.xxx"</span> （自己服务器的IP）</span><br></pre></td></tr></table></figure>
+
+<p>在settings配置完后，就准备写入爬虫主程序的代码编写</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">import scrapy,re</span><br><span class="line">from scrapy import Request</span><br><span class="line"></span><br><span class="line">class LiepinSpider(scrapy.Spider):</span><br><span class="line">    name = <span class="string">'liepin'</span></span><br><span class="line">    allowed_domains = [<span class="string">'liepin.com'</span>]</span><br><span class="line">    <span class="comment"># start_urls = ['http://liepin.com/']</span></span><br><span class="line"></span><br><span class="line">    def start_requests(self):  <span class="comment">#重写url指定的方法</span></span><br><span class="line">        cur_page = -2</span><br><span class="line">        page = -1</span><br><span class="line">        <span class="keyword">while</span> True:</span><br><span class="line">            cur_page = cur_page + 1</span><br><span class="line">            page = page + 1</span><br><span class="line">            urls = r<span class="string">'https://www.liepin.com/zhaopin/?isAnalysis=&amp;dqs=&amp;pubTime=&amp;salary=&amp;subIndustry=&amp;industryType=&amp;compscale=&amp;key=python%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91&amp;init=-1&amp;searchType=1&amp;headckid=f55990a321cbc78b&amp;compkind=&amp;fromSearchBtn=2&amp;sortFlag=15&amp;ckid=f55990a321cbc78b&amp;degradeFlag=0&amp;jobKind=&amp;industries=&amp;clean_condition=&amp;siTag=d95cAhX-dp0D2puIzlfHZQ~fA9rXquZc5IkJpXC-Ycixw&amp;d_sfrom=search_fp_bar&amp;d_ckId=8c8c9184e4f015f91103131fb15317d8&amp;d_curPage=&#123;&#125;&amp;d_pageSize=40&amp;d_headId=8c8c9184e4f015f91103131fb15317d8&amp;curPage=&#123;&#125;'</span>.format(cur_page,page)</span><br><span class="line">            yield Request(urls,callback=self.parse)</span><br><span class="line">            <span class="keyword">if</span> page == 15:</span><br><span class="line">                <span class="built_in">break</span></span><br><span class="line"></span><br><span class="line">    def parse(self, response):</span><br><span class="line">        ul = response.xpath(r<span class="string">"//ul[@class='sojob-list']/li"</span>)</span><br><span class="line">        info = &#123;<span class="string">"con"</span>:[]&#125;</span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> ul:</span><br><span class="line">            title = li.xpath(r<span class="string">".//h3/@title"</span>).get()</span><br><span class="line">            new_title = title.replace(<span class="string">'招聘'</span>,<span class="string">''</span>)</span><br><span class="line">            money = li.xpath(r<span class="string">".//span[@class='text-warning']/text()"</span>).get()</span><br><span class="line">            city = li.xpath(r<span class="string">".//p[@class='condition clearfix']//a/text()"</span>).get()</span><br><span class="line">            education =li.xpath(r<span class="string">".//span[@class='edu']/text()"</span>).get()</span><br><span class="line">            worktime = li.xpath(r<span class="string">".//span[3]/text()"</span>).get()</span><br><span class="line">            user = info[<span class="string">'con'</span>].append(&#123;<span class="string">"工作岗位"</span>:new_title,<span class="string">"薪酬"</span>:money,<span class="string">"工作地址"</span>:city,<span class="string">"学历"</span>:education,<span class="string">"工作时间"</span>:worktime&#125;)</span><br><span class="line">        <span class="built_in">return</span> info  <span class="comment">#因为上传数据库中，要以字典的形式传到piplines.py文件中</span></span><br></pre></td></tr></table></figure>
+
+<p>爬虫代码编写好后就开始对数据进行上传，在piplines.py文件的编写</p>
+<pre><code class="bash"><span class="comment"># -*- coding: utf-8 -*-</span>
+
+<span class="comment"># Define your item pipelines here</span>
+<span class="comment">#</span>
+<span class="comment"># Don't forget to add your pipeline to the ITEM_PIPELINES setting</span>
+<span class="comment"># See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html</span>
+
+from . import settings
+from pymongo import MongoClient
+from urllib.parse import quote_plus
+
+class LiepingPipeline(object):
+    def process_item(self, item, spider):
+        <span class="built_in">return</span> item
+
+class LiePinMongodb():
+<span class="comment">#下面的函数名是指定的不能更改</span>
+    def open_spider(self,spider):  <span class="comment">#连接MongoDB数据库的配置</span>
+        url = <span class="string">"mongodb://%s:%s@%s"</span> % (
+        quote_plus(settings.user), quote_plus(settings.password), quote_plus(settings.host))
+        self.client = MongoClient(url)
+        self.coll = self.client[<span class="string">"liepin"</span>][<span class="string">"user"</span>]
+        <span class="built_in">print</span>(<span class="string">'i am center'</span>)
+
+    def process_item(self, item, spider): <span class="comment">#爬取下来的数据进行上传</span>
+        self.coll.insert(item[<span class="string">'con'</span>])
+        <span class="built_in">return</span> item[<span class="string">'con'</span>]
+
+    def colse_spider(self,spider):  <span class="comment">#关闭数据库</span>
+        self.client.close()
+``` bash
+</code></pre>
+
           
         
       
@@ -471,14 +545,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-27 17:05:00 / تغییر یافته: 17:17:20" itemprop="dateCreated datePublished" datetime="2019-07-27T17:05:00+08:00">2019-07-27</time>
+              <time title="Erstellt: 2019-07-27 17:05:00 / Geändert am: 17:17:20" itemprop="dateCreated datePublished" datetime="2019-07-27T17:05:00+08:00">2019-07-27</time>
             </span>
           
 
@@ -622,14 +696,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-26 15:54:47" itemprop="dateCreated datePublished" datetime="2019-07-26T15:54:47+08:00">2019-07-26</time>
+              <time title="Erstellt: 2019-07-26 15:54:47" itemprop="dateCreated datePublished" datetime="2019-07-26T15:54:47+08:00">2019-07-26</time>
             </span>
           
 
@@ -642,9 +716,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">ویرایش شده در</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="تغییر یافته: 2019-07-27 17:17:02" itemprop="dateModified" datetime="2019-07-27T17:17:02+08:00">2019-07-27</time>
+                <time title="Geändert am: 2019-07-27 17:17:02" itemprop="dateModified" datetime="2019-07-27T17:17:02+08:00">2019-07-27</time>
               </span>
             
           
@@ -809,14 +883,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-25 13:41:14" itemprop="dateCreated datePublished" datetime="2019-07-25T13:41:14+08:00">2019-07-25</time>
+              <time title="Erstellt: 2019-07-25 13:41:14" itemprop="dateCreated datePublished" datetime="2019-07-25T13:41:14+08:00">2019-07-25</time>
             </span>
           
 
@@ -829,9 +903,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">ویرایش شده در</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="تغییر یافته: 2019-07-27 17:17:06" itemprop="dateModified" datetime="2019-07-27T17:17:06+08:00">2019-07-27</time>
+                <time title="Geändert am: 2019-07-27 17:17:06" itemprop="dateModified" datetime="2019-07-27T17:17:06+08:00">2019-07-27</time>
               </span>
             
           
@@ -1008,14 +1082,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-24 10:58:39 / تغییر یافته: 11:19:59" itemprop="dateCreated datePublished" datetime="2019-07-24T10:58:39+08:00">2019-07-24</time>
+              <time title="Erstellt: 2019-07-24 10:58:39 / Geändert am: 11:19:59" itemprop="dateCreated datePublished" datetime="2019-07-24T10:58:39+08:00">2019-07-24</time>
             </span>
           
 
@@ -1177,14 +1251,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-23 14:17:27 / تغییر یافته: 14:45:57" itemprop="dateCreated datePublished" datetime="2019-07-23T14:17:27+08:00">2019-07-23</time>
+              <time title="Erstellt: 2019-07-23 14:17:27 / Geändert am: 14:45:57" itemprop="dateCreated datePublished" datetime="2019-07-23T14:17:27+08:00">2019-07-23</time>
             </span>
           
 
@@ -1339,14 +1413,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-22 22:02:46 / تغییر یافته: 22:29:17" itemprop="dateCreated datePublished" datetime="2019-07-22T22:02:46+08:00">2019-07-22</time>
+              <time title="Erstellt: 2019-07-22 22:02:46 / Geändert am: 22:29:17" itemprop="dateCreated datePublished" datetime="2019-07-22T22:02:46+08:00">2019-07-22</time>
             </span>
           
 
@@ -1492,14 +1566,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-22 20:45:31" itemprop="dateCreated datePublished" datetime="2019-07-22T20:45:31+08:00">2019-07-22</time>
+              <time title="Erstellt: 2019-07-22 20:45:31" itemprop="dateCreated datePublished" datetime="2019-07-22T20:45:31+08:00">2019-07-22</time>
             </span>
           
 
@@ -1512,9 +1586,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">ویرایش شده در</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="تغییر یافته: 2019-07-24 11:17:06" itemprop="dateModified" datetime="2019-07-24T11:17:06+08:00">2019-07-24</time>
+                <time title="Geändert am: 2019-07-24 11:17:06" itemprop="dateModified" datetime="2019-07-24T11:17:06+08:00">2019-07-24</time>
               </span>
             
           
@@ -1682,14 +1756,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-22 19:43:56" itemprop="dateCreated datePublished" datetime="2019-07-22T19:43:56+08:00">2019-07-22</time>
+              <time title="Erstellt: 2019-07-22 19:43:56" itemprop="dateCreated datePublished" datetime="2019-07-22T19:43:56+08:00">2019-07-22</time>
             </span>
           
 
@@ -1702,9 +1776,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">ویرایش شده در</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="تغییر یافته: 2019-07-25 18:02:57" itemprop="dateModified" datetime="2019-07-25T18:02:57+08:00">2019-07-25</time>
+                <time title="Geändert am: 2019-07-25 18:02:57" itemprop="dateModified" datetime="2019-07-25T18:02:57+08:00">2019-07-25</time>
               </span>
             
           
@@ -1863,14 +1937,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">نوشته شده در</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="ایجاد شده: 2019-07-22 16:28:27" itemprop="dateCreated datePublished" datetime="2019-07-22T16:28:27+08:00">2019-07-22</time>
+              <time title="Erstellt: 2019-07-22 16:28:27" itemprop="dateCreated datePublished" datetime="2019-07-22T16:28:27+08:00">2019-07-22</time>
             </span>
           
 
@@ -2012,7 +2086,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">10</span>
-          <span class="site-state-item-name">پست ها</span>
+          <span class="site-state-item-name">Artikel</span>
         </a>
       </div>
     
@@ -2083,7 +2157,7 @@
 </div>
 
 
-  <div class="powered-by">قدرت گرفته از <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
@@ -2091,7 +2165,7 @@
 
 
 
-  <div class="theme-info">پوسته – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
 
 
 
