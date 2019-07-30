@@ -104,7 +104,7 @@
 <meta property="og:description" content="信息数据的可视化介绍做数据分析一般用到的三个包matplotlib、numpy、pandasmatplotlib是专门对爬取的数据做一个折线图、扇形图、条形图等。一般是结合numpy一起使用的。numpy是NumPy是使用Python进行科学计算的基础包，提供高性能的矩阵运算。Pandas是一个强大的分析结构化数据的工具集；它的使用基础是Numpy（提供高性能的矩阵运算）；用于数据挖掘和数据分析，">
 <meta property="og:locale" content="china">
 <meta property="og:image" content="http://yoursite.com/images/python%E5%B0%B1%E4%B8%9A%E5%9B%BE.jpg">
-<meta property="og:updated_time" content="2019-07-30T14:26:29.741Z">
+<meta property="og:updated_time" content="2019-07-30T14:28:16.424Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="对爬取的信息做可视化">
 <meta name="twitter:description" content="信息数据的可视化介绍做数据分析一般用到的三个包matplotlib、numpy、pandasmatplotlib是专门对爬取的数据做一个折线图、扇形图、条形图等。一般是结合numpy一起使用的。numpy是NumPy是使用Python进行科学计算的基础包，提供高性能的矩阵运算。Pandas是一个强大的分析结构化数据的工具集；它的使用基础是Numpy（提供高性能的矩阵运算）；用于数据挖掘和数据分析，">
@@ -333,7 +333,7 @@
                 
               
 
-              <time title="Erstellt: 2019-07-30 22:00:14 / Geändert am: 22:26:29" itemprop="dateCreated datePublished" datetime="2019-07-30T22:00:14+08:00">2019-07-30</time>
+              <time title="Erstellt: 2019-07-30 22:00:14 / Geändert am: 22:28:16" itemprop="dateCreated datePublished" datetime="2019-07-30T22:00:14+08:00">2019-07-30</time>
             </span>
           
 
@@ -386,7 +386,7 @@
 <p>接下来绘图保存：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">plt.plot(train_X, train_Y, <span class="string">'ro'</span>, label=<span class="string">'Original data'</span>)</span><br><span class="line">plt.plot(train_X, sess.run(W) * train_X + sess.run(b), label=<span class="string">'Fitted line'</span>)</span><br><span class="line">plt.savefig(<span class="string">"examples.jpg"</span>)  <span class="comment">#通过savefig进行对分析好的数据进行保存到本地</span></span><br><span class="line">--------------------- </span><br><span class="line">作者：Bicelove </span><br><span class="line">来源：CSDN </span><br><span class="line">原文：https://blog.csdn.net/u010555688/article/details/64467864</span><br></pre></td></tr></table></figure>
 
-<p>效果图如下：<br><img src="/images/python%E5%B0%B1%E4%B8%9A%E5%9B%BE.jpg" alt="&quot;python就业地区分布图&quot;"></p>
+<p>效果图如下：<br><img src="/images/python%E5%B0%B1%E4%B8%9A%E5%9B%BE.jpg" alt="&quot;python就业地区分布图&quot;"><br>用hexo上传图片这个研究了挺久的，下次把这个上传图片的笔记补上<br>hexo上传图片的参考链接：<a href="https://yanyinhong.github.io/2017/05/02/How-to-insert-image-in-hexo-post/" target="_blank" rel="noopener">https://yanyinhong.github.io/2017/05/02/How-to-insert-image-in-hexo-post/</a></p>
 <h2 id="51job视图可视化"><a href="#51job视图可视化" class="headerlink" title="51job视图可视化"></a>51job视图可视化</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">import matplotlib.pyplot as plt</span><br><span class="line">import pandas as pd</span><br><span class="line"></span><br><span class="line">path1 = r<span class="string">"C:\Users\Administrator.SKY-20190217ZDF\Desktop\python.csv"</span></span><br><span class="line">fig=plt.figure(num=1,figsize=(15,8),dpi=80)</span><br><span class="line">python_job = pd.read_csv(path1,encoding=<span class="string">"gbk"</span>)</span><br><span class="line">count = python_job[<span class="string">"地区"</span>].value_counts().plot()</span><br><span class="line"><span class="comment"># python_money = python_job["地区"]</span></span><br><span class="line"><span class="comment"># 修改默认字体</span></span><br><span class="line">plt.rcParams[<span class="string">"font.sans-serif"</span>] = [<span class="string">'simhei'</span>]  <span class="comment"># 修改默认字体</span></span><br><span class="line">plt.rcParams[<span class="string">'axes.unicode_minus'</span>] = False  <span class="comment"># 解决保存图像是负号'-'显示为方块的问题</span></span><br><span class="line"><span class="comment"># plt.savefig(r'C:\Users\Administrator.SKY-20190217ZDF\Desktop\python就业分布图.png')</span></span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 
 
