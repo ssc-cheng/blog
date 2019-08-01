@@ -288,6 +288,170 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/01/APP信息爬取(环境部署)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/01/APP信息爬取(环境部署)/" class="post-title-link" itemprop="url">APP信息爬取</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-08-01 13:47:34 / Geändert am: 15:01:45" itemprop="dateCreated datePublished" datetime="2019-08-01T13:47:34+08:00">2019-08-01</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="下载抓包工具"><a href="#下载抓包工具" class="headerlink" title="下载抓包工具"></a>下载抓包工具</h2><h3 id="Fiddler抓包工具"><a href="#Fiddler抓包工具" class="headerlink" title="Fiddler抓包工具"></a>Fiddler抓包工具</h3><p>Fiddler（中文名称：小提琴）是一个HTTP的调试代理，以代理服务器的方式，监听系统的Http网络数据流动，Fiddler也可以让你检查所有的HTTP通讯，设置断点，以及Fiddle所有的“进出”的数据（我一般用来抓包）,Fiddler还包含一个简单却功能强大的基于JScript .NET事件脚本子系统，它可以支持众多的HTTP调试任务。</p>
+<h3 id="青花瓷抓包工具"><a href="#青花瓷抓包工具" class="headerlink" title="青花瓷抓包工具"></a>青花瓷抓包工具</h3><p>Charles是一款代理服务器，通过将自己设置成系统（电脑或者浏览器）的网络访问代理服务器，然后截取请求和请求结果进行分析抓包。<br>Charles是专门对app移动端进行的抓包工具，是要进行收费的</p>
+<h2 id="app抓包环境"><a href="#app抓包环境" class="headerlink" title="app抓包环境"></a>app抓包环境</h2><p>这是我采用的是fiddler工具进行抓包，fiddler不仅可以对移动端进行抓包，也可以对PC端进行抓包，比较方便，因此我采用fiddler进行抓包。这里就不介绍怎么安装了。</p>
+<p>对app爬取的环境配置</p>
+<p><img src="/images/fiddler1.jpg" alt="&quot;fiddler配置1&quot;"></p>
+<p>选中图中的工具–选项 把要勾的都勾选上（如下图）</p>
+<p><img src="/images/fiddler2.jpg" alt="&quot;fiddler配置2&quot;"></p>
+<p><img src="/images/fiddler3.jpg" alt="&quot;fiddler配置3&quot;"></p>
+<p><img src="/images/fiddler4.jpg" alt="&quot;fiddler配置4&quot;"></p>
+<p>以上操作设置好了fiddler的app环境配置，接下来我们下载一个模拟器在模拟端进行手机app爬取信息</p>
+<h2 id="模拟器的安装"><a href="#模拟器的安装" class="headerlink" title="模拟器的安装"></a>模拟器的安装</h2><p>在网上有许多模拟器的软件，这里就不一一介绍了，我们现在采用夜神模拟器的安装</p>
+<h2 id="夜神模拟器配置"><a href="#夜神模拟器配置" class="headerlink" title="夜神模拟器配置"></a>夜神模拟器配置</h2><p>安装就不介绍了，这个就介绍夜神模拟器中的证书与fiddler之间建立一个链接，当用户进行app爬取信息时，让网络的流量先通过fiddler抓包工具，通过fiddler再发送流量，而接受回来的流量也是先经过fiddler抓包工具在把数据的内容发送给app移动端。所以fiddler充当的身份相当于一个中间人的身份。</p>
+<p>对模拟器中的WiFi设置，如图：</p>
+<p><img src="/images/fiddler5.jpg" alt="&quot;fiddler配置5&quot;"></p>
+<p>模拟器的证书安装：<br>参考：<a href="https://www.cnblogs.com/Supperlitt/p/6816256.html" target="_blank" rel="noopener">https://www.cnblogs.com/Supperlitt/p/6816256.html</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/30/对爬取的信息做可视化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1864,187 +2028,6 @@ class LiePinMongodb():
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/22/hexo基本操作与部署/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ssc">
-      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to ssc bolg !">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/22/hexo基本操作与部署/" class="post-title-link" itemprop="url">hexo基本操作与部署</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-22 19:43:56" itemprop="dateCreated datePublished" datetime="2019-07-22T19:43:56+08:00">2019-07-22</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Bearbeitet am</span>
-                
-                <time title="Geändert am: 2019-07-25 18:02:57" itemprop="dateModified" datetime="2019-07-25T18:02:57+08:00">2019-07-25</time>
-              </span>
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="hexo-基本操作"><a href="#hexo-基本操作" class="headerlink" title="hexo 基本操作"></a>hexo 基本操作</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>启动hexo服务</p>
-<p>运行成功后的效果：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  Hexo is running at http://localhost:4000 . Press Ctrl+C to stop.</span><br></pre></td></tr></table></figure>
-
-<p>访问<a href="http://localhost:4000就可以看到自己的博客" target="_blank" rel="noopener">http://localhost:4000就可以看到自己的博客</a></p>
-<h2 id="常用的hexo命令集"><a href="#常用的hexo命令集" class="headerlink" title="常用的hexo命令集"></a>常用的hexo命令集</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate  简写  hexo g</span><br></pre></td></tr></table></figure>
-
-<p>生成静态文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy  简写  hexo d</span><br></pre></td></tr></table></figure>
-
-<p>部署网页，网页上线后则通过这个命令进行上传文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br></pre></td></tr></table></figure>
-
-<p>清除缓存文件</p>
-<h2 id="hexo更新数据"><a href="#hexo更新数据" class="headerlink" title="hexo更新数据"></a>hexo更新数据</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean</span><br><span class="line">$ hexo g</span><br><span class="line">$ hexo d</span><br></pre></td></tr></table></figure>
-
-<p>重新运行浏览器进入个人博客</p>
-<h2 id="hexo部署的坑区"><a href="#hexo部署的坑区" class="headerlink" title="hexo部署的坑区"></a>hexo部署的坑区</h2><p>文章参考：<br>推荐一个个人博客：<a href="https://blog.csdn.net/liuyongshun2/article/details/54629087" target="_blank" rel="noopener">https://blog.csdn.net/liuyongshun2/article/details/54629087</a></p>
-<h2 id="hexo的命令大全"><a href="#hexo的命令大全" class="headerlink" title="hexo的命令大全"></a>hexo的命令大全</h2><p>文章参考：<br><a href="https://hexo.io/zh-cn/docs/commands.html" target="_blank" rel="noopener">https://hexo.io/zh-cn/docs/commands.html</a></p>
-<h2 id="搭建个人博客视频（hexo与git的使用）"><a href="#搭建个人博客视频（hexo与git的使用）" class="headerlink" title="搭建个人博客视频（hexo与git的使用）"></a>搭建个人博客视频（hexo与git的使用）</h2><p>文章参考：<br>bibi视频:<a href="https://www.bilibili.com/video/av60124681" target="_blank" rel="noopener">https://www.bilibili.com/video/av60124681</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2092,7 +2075,7 @@ class LiePinMongodb():
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">Artikel</span>
         </a>
       </div>
