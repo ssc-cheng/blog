@@ -288,6 +288,181 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/06/爬取的数据写成exel表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/06/爬取的数据写成exel表/" class="post-title-link" itemprop="url">爬取的数据写成exel表</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-06 19:13:07 / Modified: 19:57:25" itemprop="dateCreated datePublished" datetime="2019-08-06T19:13:07+08:00">2019-08-06</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="csv的基本使用介绍"><a href="#csv的基本使用介绍" class="headerlink" title="csv的基本使用介绍"></a>csv的基本使用介绍</h2><p>CSV(Comma-Separated Values)即逗号分隔值，可以用Excel打开查看。由于是纯文本，任何编辑器也都可打开。与Excel文件不同，CSV文件中：</p>
+<ul>
+<li>值没有类型，所有值都是字符串</li>
+<li>不能指定字体颜色等样式</li>
+<li>不能指定单元格的宽高，不能合并单元格</li>
+<li>没有多个工作表</li>
+<li>不能嵌入图像图表</li>
+</ul>
+<p>在CSV文件中，以<code>,</code>作为分隔符，分隔两个单元格。像这样<code>a,,c</code>表示单元格<code>a</code>和单元格<code>c</code>之间有个空白的单元格。依此类推。</p>
+<p>不是每个逗号都表示单元格之间的分界。所以即使CSV是纯文本文件，也坚持使用专门的模块进行处理。Python内置了csv模块。</p>
+<h2 id="从CSV文件中读取数据"><a href="#从CSV文件中读取数据" class="headerlink" title="从CSV文件中读取数据"></a>从CSV文件中读取数据</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">import csv</span><br><span class="line"></span><br><span class="line">file = r<span class="string">"C:\Users\Administrator.SKY-20190217ZDF\Desktop\java.csv"</span></span><br><span class="line">with open(file,<span class="string">"r"</span>)as f:</span><br><span class="line">    files = csv.reader(f)</span><br><span class="line">    lists = list(files)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> lists:</span><br><span class="line">        <span class="built_in">print</span>(i)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/csv%E6%95%88%E6%9E%9C%E5%9B%BE1.jpg" alt="&quot;最后的效果图&quot;"></p>
+<p>前面的数字是行号，<strong>从1开始</strong>，可以用<code>reader.line_num</code>获取。<br>要注意的是，reader只能被遍历一次。由于reader是可迭代对象，可以使用<code>next</code>方法一次获取一行。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">import csv</span><br><span class="line"></span><br><span class="line">filename = <span class="string">'F:/Jupyter Notebook/matplotlib_pygal_csv_json/sitka_weather_2014.csv'</span></span><br><span class="line">with open(filename,<span class="string">'r'</span>) as f:</span><br><span class="line">    reader = csv.reader(f)</span><br><span class="line">    <span class="comment"># 读取一行，下面的reader中已经没有该行了</span></span><br><span class="line">    head_row = next(reader)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> reader:</span><br><span class="line">        <span class="comment"># 行号从2开始</span></span><br><span class="line">        <span class="built_in">print</span>(reader.line_num, row)</span><br></pre></td></tr></table></figure>
+
+<h2 id="写数据到csv文件中-这个常用，写成exel表形式"><a href="#写数据到csv文件中-这个常用，写成exel表形式" class="headerlink" title="写数据到csv文件中(这个常用，写成exel表形式)"></a>写数据到csv文件中(这个常用，写成exel表形式)</h2><p>有reader可以读取，当然也有writer可以写入。一次写入一行，一次写入多行都可以。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">import csv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用数字和字符串的数字都可以</span></span><br><span class="line">datas = [[<span class="string">'name'</span>, <span class="string">'age'</span>],</span><br><span class="line">         [<span class="string">'Bob'</span>, 14],</span><br><span class="line">         [<span class="string">'Tom'</span>, 23],</span><br><span class="line">        [<span class="string">'Jerry'</span>, <span class="string">'18'</span>]]</span><br><span class="line"></span><br><span class="line">with open(<span class="string">'example.csv'</span>, <span class="string">'w'</span>, newline=<span class="string">''</span>) as f:</span><br><span class="line">    writer = csv.writer(f)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> datas:</span><br><span class="line">        writer.writerow(row)</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 还可以写入多行</span></span><br><span class="line">    writer.writerows(datas)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 写入多行</span></span><br><span class="line">with open(<span class="string">'java.csv'</span>, <span class="string">'w'</span>, newline=<span class="string">''</span>) as f:</span><br><span class="line">    writer = csv.writer(f)</span><br><span class="line">    writer.writerow([<span class="string">"工种"</span>,<span class="string">"薪酬"</span>,<span class="string">"学历"</span>,<span class="string">"公司名"</span>])</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> info:</span><br><span class="line">        writer.writerows(info)<span class="comment"># 还可以写入多行</span></span><br></pre></td></tr></table></figure>
+
+<p>使用技巧：当写入exel表中时，第一行写入的是标题，第二行才开始是内容，这时我们可以分成两步，第一步先单独写入一行标题，如上，然后具体的数据内容就可以一次性写入多行了。也可以参考下面这种方式，通过字典的键值对进行写入exel表中。</p>
+<h2 id="DictReader和DictWriter对象"><a href="#DictReader和DictWriter对象" class="headerlink" title="DictReader和DictWriter对象"></a>DictReader和DictWriter对象</h2><p>使用DictReader可以像操作字典那样获取数据，把表的第一行（一般是标头）作为key。可访问每一行中那个某个key对应的数据。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import csv</span><br><span class="line"></span><br><span class="line">filename = <span class="string">'F:/Jupyter Notebook/matplotlib_pygal_csv_json/sitka_weather_2014.csv'</span></span><br><span class="line">with open(filename,<span class="string">'r'</span>) as f:</span><br><span class="line">    reader = csv.DictReader(f)</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> reader:</span><br><span class="line">        <span class="comment"># Max TemperatureF是表第一行的某个数据，作为key</span></span><br><span class="line">        max_temp = row[<span class="string">'Max TemperatureF'</span>]</span><br><span class="line">        <span class="built_in">print</span>(max_temp)</span><br></pre></td></tr></table></figure>
+
+<p>使用DictWriter类，可以写入字典形式的数据，同样键也是标头（表格第一行）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">import csv</span><br><span class="line"></span><br><span class="line">headers = [<span class="string">'name'</span>, <span class="string">'age'</span>]</span><br><span class="line"></span><br><span class="line">datas = [&#123;<span class="string">'name'</span>:<span class="string">'Bob'</span>, <span class="string">'age'</span>:23&#125;,</span><br><span class="line">        &#123;<span class="string">'name'</span>:<span class="string">'Jerry'</span>, <span class="string">'age'</span>:44&#125;,</span><br><span class="line">        &#123;<span class="string">'name'</span>:<span class="string">'Tom'</span>, <span class="string">'age'</span>:15&#125;</span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">with open(<span class="string">'example.csv'</span>, <span class="string">'w'</span>, newline=<span class="string">''</span>) as f:</span><br><span class="line">    <span class="comment"># 标头在这里传入，作为第一行数据</span></span><br><span class="line">    writer = csv.DictWriter(f, fieldnames=headers)</span><br><span class="line">    writer.writeheader()</span><br><span class="line">    <span class="keyword">for</span> row <span class="keyword">in</span> datas:</span><br><span class="line">        writer.writerow(row)</span><br><span class="line">        </span><br><span class="line">    <span class="comment"># 还可以写入多行</span></span><br><span class="line">    writer.writerows(datas)</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/02/APP爬取豆果美食/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1859,168 +2034,6 @@ class LiePinMongodb():
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/23/requests伪装与代理/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ssc">
-      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to ssc bolg !">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/23/requests伪装与代理/" class="post-title-link" itemprop="url">requests伪装与代理</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-23 14:17:27 / Modified: 14:45:57" itemprop="dateCreated datePublished" datetime="2019-07-23T14:17:27+08:00">2019-07-23</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="requests伪装"><a href="#requests伪装" class="headerlink" title="requests伪装"></a>requests伪装</h2><p>requests伪装主要是伪装成浏览器进行一个网页爬取数据，常用的是通过“user-agent”，“referer”等请求头的参数进行一个伪装的访问请求。“user-agent”是告诉浏览器客户端的身份，所以在请求网页的同时要携带上客户端身份伪装。</p>
-<h2 id="requests代理"><a href="#requests代理" class="headerlink" title="requests代理"></a>requests代理</h2><p>在爬虫时，我们不能用同一个IP进行爬取信息，一来容易被服务器发现自己的身份。二来如果被服务器发现你是一个爬虫，那么在服务器的黑名单中就会添加上你的IP，禁止了你IP对浏览器的访问。这时候我们就会用到代理服务</p>
-<p>如何在requests中使用代理：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">proxies = &#123;</span><br><span class="line">   <span class="string">"http"</span>:<span class="string">"http://ip:端口号"</span></span><br><span class="line">   <span class="string">"https"</span>:<span class="string">"https://ip:端口号"</span></span><br><span class="line">&#125;</span><br><span class="line">request.get(url, proxies=proxies)</span><br></pre></td></tr></table></figure>
-
-<p>代理的IP地址可在快代理平台中进行搜索免费IP，不过多数都已经不能使用了</p>
-<p>如果是购买的IP代理则通过如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">proxies = &#123;</span><br><span class="line">   <span class="string">"http"</span>:<span class="string">"http://username:password@ip:端口号"</span></span><br><span class="line">   <span class="string">"https"</span>: <span class="string">"https://username:password@ip:端口号"</span></span><br><span class="line">&#125;</span><br><span class="line">request.get(url, proxies=proxies)</span><br></pre></td></tr></table></figure>
-
-<h2 id="使用代理IP池生成随机代理"><a href="#使用代理IP池生成随机代理" class="headerlink" title="使用代理IP池生成随机代理"></a>使用代理IP池生成随机代理</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">import random</span><br><span class="line">import requests</span><br><span class="line"><span class="comment"># 1. 准备代理列表</span></span><br><span class="line">proxies = [</span><br><span class="line">    &#123;<span class="string">'http'</span>: <span class="string">'121.8.98.198:80'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'http'</span>: <span class="string">'39.108.234.144:80'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'http'</span>: <span class="string">'125.120.201.68:808'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'http'</span>: <span class="string">'120.24.216.39:60443'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'http'</span>: <span class="string">'121.8.98.198:80'</span>&#125;,</span><br><span class="line">    &#123;<span class="string">'http'</span>: <span class="string">'121.8.98.198:80'</span>&#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 随机选出一个代理</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(0, 10):</span><br><span class="line">    proxy = random.choice(proxies)</span><br><span class="line">    <span class="built_in">print</span>(proxy)</span><br><span class="line">    try:</span><br><span class="line">        response = requests.get(<span class="string">"http://www.baidu.com"</span>, proxies=proxy, timeout=3)</span><br><span class="line">        <span class="built_in">print</span>(response.status_code)</span><br><span class="line">    except Exception as ex:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">"代理有问题: %s"</span> % proxy)</span><br></pre></td></tr></table></figure>
-
-<p>测试代理IP的可用性</p>
-<h2 id="通过伪装的用户身份与代理爬取果壳问答"><a href="#通过伪装的用户身份与代理爬取果壳问答" class="headerlink" title="通过伪装的用户身份与代理爬取果壳问答"></a>通过伪装的用户身份与代理爬取果壳问答</h2><p>源代码如下，仅供参考。<br>基于OOP编程的思想编写代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">import requests,json,random</span><br><span class="line">from lxml import etree</span><br><span class="line"></span><br><span class="line">class GuoKe():</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.num = 0</span><br><span class="line">        self.headers = [&#123;</span><br><span class="line">            <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (iPad; CPU OS 11_0 like Mac OS X) AppleWebKit/604.1.34 (KHTML, like Gecko) Version/11.0 Mobile/15A5341f Safari/604.1'</span></span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Linux; Android 8.0; Pixel 2 Build/OPD3.170816.012) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Mobile Safari/537.36'</span></span><br><span class="line">        &#125;</span><br><span class="line">        ]</span><br><span class="line">        self.proxies = [</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'121.8.98.198:80'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'39.108.234.144:80'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'125.120.201.68:808'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'120.24.216.39:60443'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'121.8.98.198:80'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'121.8.98.198:80'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>:<span class="string">'123.206.30.254:8118'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'115.210.24.183:9000'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'183.129.207.86:14002'</span>&#125;,</span><br><span class="line">            &#123;<span class="string">'http'</span>: <span class="string">'183.129.207.89:27727'</span>&#125;,</span><br><span class="line"></span><br><span class="line">        ]</span><br><span class="line"></span><br><span class="line">    def urls(self):  <span class="comment">#获取url</span></span><br><span class="line">        url_list = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(1,101):</span><br><span class="line">            url = <span class="string">"https://www.guokr.com/ask/highlight/?page=%s"</span>%i</span><br><span class="line">            url_list.append(url)</span><br><span class="line">        <span class="built_in">return</span> url_list</span><br><span class="line"></span><br><span class="line">    def get_info(self,url):  <span class="comment">#得到URL后进行请求并获取信息</span></span><br><span class="line">        proxy = random.choice(self.proxies)</span><br><span class="line">        headers = random.choice(self.headers)</span><br><span class="line">        <span class="comment"># print(proxy)</span></span><br><span class="line">        <span class="comment"># print(headers)</span></span><br><span class="line">        main_html = requests.get(url,proxies=proxy,headers=headers)</span><br><span class="line">        main_info = etree.HTML(main_html.text)</span><br><span class="line">        lists = main_info.xpath(<span class="string">'//div[@class="gmain"]/ul[2]//li'</span>)</span><br><span class="line">        info = []</span><br><span class="line">        <span class="keyword">for</span> list <span class="keyword">in</span> lists:</span><br><span class="line">            title = list.xpath(<span class="string">".//h2/a/text()"</span>)</span><br><span class="line">            answer_url = list.xpath(<span class="string">".//h2/a/@href"</span>)</span><br><span class="line">            user_info = &#123;<span class="string">"title"</span>:title,<span class="string">"url"</span>:answer_url&#125;</span><br><span class="line">            info.append(user_info)</span><br><span class="line"></span><br><span class="line">        self.num += 1</span><br><span class="line">        <span class="comment"># print(self.num)</span></span><br><span class="line">        <span class="comment"># print(len(info))</span></span><br><span class="line">        <span class="built_in">return</span> info</span><br><span class="line"></span><br><span class="line">    def save(self,info):</span><br><span class="line">        json_str = json.dumps(info,indent=4,ensure_ascii=False)</span><br><span class="line">        with open(<span class="string">'./果壳问答.txt'</span>,<span class="string">'a'</span>,encoding=<span class="string">'utf-8'</span>)as f:</span><br><span class="line">            f.write(json_str)</span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        urls = self.urls()</span><br><span class="line">        <span class="keyword">for</span> url <span class="keyword">in</span> urls:</span><br><span class="line">            time.sleep(1)</span><br><span class="line">            html = self.get_info(url)</span><br><span class="line">            self.save(html)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    guoke = GuoKe()</span><br><span class="line">    guoke.run()</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2068,7 +2081,7 @@ class LiePinMongodb():
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
