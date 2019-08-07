@@ -88,9 +88,9 @@
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
     }
   };
 </script>
@@ -197,7 +197,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="Navigationsleiste an/ausschalten">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -224,7 +224,7 @@
 
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
 
   </li>
         
@@ -240,7 +240,7 @@
 
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
 
   </li>
 
@@ -272,6 +272,170 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/07/破解js加密/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/07/破解js加密/" class="post-title-link" itemprop="url">破解js加密</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-08-07 20:07:27 / Geändert am: 21:17:26" itemprop="dateCreated datePublished" datetime="2019-08-07T20:07:27+08:00">2019-08-07</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="破解js加密数据"><a href="#破解js加密数据" class="headerlink" title="破解js加密数据"></a>破解js加密数据</h1><h2 id="有道词典js加密"><a href="#有道词典js加密" class="headerlink" title="有道词典js加密"></a>有道词典js加密</h2><p>爬取有道词典post请求中返回的数据信息是js加密中最为经典的加密类型。如图：</p>
+<p><img src="/images/js%E5%8A%A0%E5%AF%861.jpg" alt="&quot;js加密&quot;"></p>
+<p>其中以下有4个参数，salt是加盐的意思，这个是时间戳的意思。我们找到要提交的data数据中有一个时间戳，那我们就搜索时间戳的所有数据，如图：</p>
+<p><img src="/images/js%E5%8A%A0%E5%AF%862.jpg" alt="&quot;js加密&quot;"></p>
+<p>找到了对应的js文件，如图：</p>
+<p><img src="/images/js%E5%8A%A0%E5%AF%863.jpg" alt="&quot;js加密&quot;"></p>
+<p>分析js文件里的加密数据</p>
+<p>通过Ctrl+F搜索salt（盐），我们找到了如下的数据进行进一步的分析。<br><img src="/images/js%E5%8A%A0%E5%AF%864.jpg" alt="&quot;js加密&quot;"></p>
+<p>找到了如上的4个参数后开始分析参数里的字母所表示的含义，用户在获取到数据时必定会经过加密的js命令，所以在对应的js加密命令中打上一个断点。（断点的作用：在你打上断点之前的变量对应的值的信息都会进行一个显示）如图：</p>
+<p><img src="/images/js%E5%8A%A0%E5%AF%865.jpg" alt="&quot;js加密&quot;"></p>
+<p>分析好后就可以对post上传的data数据进行伪装了</p>
+<p>有道词典源码，仅供参考：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">import requests,time,random,hashlib</span><br><span class="line"></span><br><span class="line">class YouDao():</span><br><span class="line">    </span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.url = r<span class="string">"http://fanyi.youdao.com/translate_o?smartresult=dict&amp;smartresult=rule"</span></span><br><span class="line">        self.header = &#123;</span><br><span class="line">            <span class="string">"Accept"</span>:<span class="string">"application/json, text/javascript, */*; q=0.01"</span>,</span><br><span class="line">            <span class="string">"Accept-Encoding"</span>:<span class="string">"gzip, deflate"</span>,</span><br><span class="line">            <span class="string">"Accept-Language"</span>:<span class="string">"zh-CN,zh;q=0.9,en;q=0.8"</span>,</span><br><span class="line">            <span class="string">"Connection"</span>:<span class="string">"keep-alive"</span>,</span><br><span class="line">            <span class="string">"Content-Length"</span>:<span class="string">"238"</span>,</span><br><span class="line">            <span class="string">"Content-Type"</span>:<span class="string">"application/x-www-form-urlencoded; charset=UTF-8"</span>,</span><br><span class="line">            <span class="string">"Cookie"</span>:<span class="string">"OUTFOX_SEARCH_USER_ID=1691002130@10.169.0.84; OUTFOX_SEARCH_USER_ID_NCOO=1825077329.730029; _ga=GA1.2.1865132154.1563969328; DICT_UGC=be3af0da19b5c5e6aa4e17bd8d90b28a|; JSESSIONID=abcFCxWgGXFO2cg6S0RXw; ___rl__test__cookies=1565177117812"</span>,</span><br><span class="line">            <span class="string">"Host"</span>:<span class="string">"fanyi.youdao.com"</span>,</span><br><span class="line">            <span class="string">"Origin"</span>:<span class="string">"http://fanyi.youdao.com"</span>,</span><br><span class="line">            <span class="string">"Referer"</span>:<span class="string">"http://fanyi.youdao.com/"</span>,</span><br><span class="line">            <span class="string">"User-Agent"</span>:<span class="string">"Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.142 Safari/537.36"</span>,</span><br><span class="line">            <span class="string">"X-Requested-With"</span>:<span class="string">"XMLHttpRequest"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    def md5(self,info):</span><br><span class="line">        <span class="string">""</span><span class="string">"</span></span><br><span class="line"><span class="string">        对sign进行md5加密</span></span><br><span class="line"><span class="string">        :return:</span></span><br><span class="line"><span class="string">        "</span><span class="string">""</span></span><br><span class="line">        string = info.encode(<span class="string">"utf-8"</span>)</span><br><span class="line">        md5 = hashlib.md5(string).hexdigest()  <span class="comment"># 返回一个摘要 是一个32位的字符串</span></span><br><span class="line">        <span class="built_in">return</span> md5</span><br><span class="line"></span><br><span class="line">    def post_data(self,userinfo):</span><br><span class="line">        salt = str(time.time()*1000)+str(random.randint(0,9))</span><br><span class="line">        ts = str(time.time()*1000)</span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">"i"</span>:userinfo,</span><br><span class="line">            <span class="string">"from"</span>:<span class="string">"AUTO"</span>,</span><br><span class="line">            <span class="string">"to"</span>:<span class="string">"AUTO"</span>,</span><br><span class="line">            <span class="string">"smartresult"</span>:<span class="string">"dict"</span>,</span><br><span class="line">            <span class="string">"client"</span>:<span class="string">"fanyideskweb"</span>,</span><br><span class="line">            <span class="string">"salt"</span>:salt,</span><br><span class="line">            <span class="string">"sign"</span>:self.md5(<span class="string">"fanyideskweb"</span>+userinfo+salt+<span class="string">"n%A-rKaT5fb[Gy?;N5@Tj"</span>),</span><br><span class="line">            <span class="string">"ts"</span>:ts,</span><br><span class="line">            <span class="string">"bv"</span>:<span class="string">"6bd43b532a04b6145782cfe65196ca4f"</span>,</span><br><span class="line">            <span class="string">"doctype"</span>:<span class="string">"json"</span>,</span><br><span class="line">            <span class="string">"version"</span>:<span class="string">"2.1"</span>,</span><br><span class="line">            <span class="string">"keyfrom"</span>:<span class="string">"fanyi.web"</span>,</span><br><span class="line">            <span class="string">"action"</span>:<span class="string">"FY_BY_REALTlME"</span>,</span><br><span class="line">        &#125;</span><br><span class="line">        html = requests.post(url=self.url, headers=self.header, data=data)</span><br><span class="line">        <span class="built_in">return</span> html</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    user = input(<span class="string">"请输入要查询的内容："</span>)  <span class="comment">#可以是中文也可以是英文</span></span><br><span class="line">    youdao = YouDao()</span><br><span class="line">    info = youdao.post_data(user)</span><br><span class="line">    <span class="built_in">print</span>(info.text)</span><br></pre></td></tr></table></figure>
+
+<h2 id="自制爬虫小工具"><a href="#自制爬虫小工具" class="headerlink" title="自制爬虫小工具"></a>自制爬虫小工具</h2><p>提供一个给请求头加“”的源码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">import re</span><br><span class="line"></span><br><span class="line"><span class="built_in">test</span> = <span class="string">""</span><span class="string">"  #test是放源data或源请求头中的信息</span></span><br><span class="line"><span class="string">"</span><span class="string">""</span></span><br><span class="line">newlist = re.findall(r<span class="string">"(.*):\s(.*)"</span>,<span class="built_in">test</span>,re.M)</span><br><span class="line"><span class="keyword">for</span> dict <span class="keyword">in</span> newlist:</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">'"%s":"%s",'</span>%(dict[0],dict[1]))</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
     
       
 
@@ -326,14 +490,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-08-06 19:13:07 / Modified: 19:57:25" itemprop="dateCreated datePublished" datetime="2019-08-06T19:13:07+08:00">2019-08-06</time>
+              <time title="Erstellt: 2019-08-06 19:13:07 / Geändert am: 19:57:25" itemprop="dateCreated datePublished" datetime="2019-08-06T19:13:07+08:00">2019-08-06</time>
             </span>
           
 
@@ -501,14 +665,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-08-02 20:20:18 / Modified: 21:33:39" itemprop="dateCreated datePublished" datetime="2019-08-02T20:20:18+08:00">2019-08-02</time>
+              <time title="Erstellt: 2019-08-02 20:20:18 / Geändert am: 21:33:39" itemprop="dateCreated datePublished" datetime="2019-08-02T20:20:18+08:00">2019-08-02</time>
             </span>
           
 
@@ -670,14 +834,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-08-01 15:05:42 / Modified: 15:51:45" itemprop="dateCreated datePublished" datetime="2019-08-01T15:05:42+08:00">2019-08-01</time>
+              <time title="Erstellt: 2019-08-01 15:05:42 / Geändert am: 15:51:45" itemprop="dateCreated datePublished" datetime="2019-08-01T15:05:42+08:00">2019-08-01</time>
             </span>
           
 
@@ -837,14 +1001,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-08-01 13:47:34 / Modified: 15:01:45" itemprop="dateCreated datePublished" datetime="2019-08-01T13:47:34+08:00">2019-08-01</time>
+              <time title="Erstellt: 2019-08-01 13:47:34 / Geändert am: 15:01:45" itemprop="dateCreated datePublished" datetime="2019-08-01T13:47:34+08:00">2019-08-01</time>
             </span>
           
 
@@ -1001,14 +1165,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-07-30 22:00:14 / Modified: 22:28:16" itemprop="dateCreated datePublished" datetime="2019-07-30T22:00:14+08:00">2019-07-30</time>
+              <time title="Erstellt: 2019-07-30 22:00:14 / Geändert am: 22:28:16" itemprop="dateCreated datePublished" datetime="2019-07-30T22:00:14+08:00">2019-07-30</time>
             </span>
           
 
@@ -1162,14 +1326,14 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-07-28 12:53:18" itemprop="dateCreated datePublished" datetime="2019-07-28T12:53:18+08:00">2019-07-28</time>
+              <time title="Erstellt: 2019-07-28 12:53:18" itemprop="dateCreated datePublished" datetime="2019-07-28T12:53:18+08:00">2019-07-28</time>
             </span>
           
 
@@ -1182,9 +1346,9 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="Modified: 2019-07-29 11:13:37" itemprop="dateModified" datetime="2019-07-29T11:13:37+08:00">2019-07-29</time>
+                <time title="Geändert am: 2019-07-29 11:13:37" itemprop="dateModified" datetime="2019-07-29T11:13:37+08:00">2019-07-29</time>
               </span>
             
           
@@ -1381,14 +1545,14 @@ class LiePinMongodb():
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-07-27 17:05:00 / Modified: 17:17:20" itemprop="dateCreated datePublished" datetime="2019-07-27T17:05:00+08:00">2019-07-27</time>
+              <time title="Erstellt: 2019-07-27 17:05:00 / Geändert am: 17:17:20" itemprop="dateCreated datePublished" datetime="2019-07-27T17:05:00+08:00">2019-07-27</time>
             </span>
           
 
@@ -1532,14 +1696,14 @@ class LiePinMongodb():
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-07-26 15:54:47" itemprop="dateCreated datePublished" datetime="2019-07-26T15:54:47+08:00">2019-07-26</time>
+              <time title="Erstellt: 2019-07-26 15:54:47" itemprop="dateCreated datePublished" datetime="2019-07-26T15:54:47+08:00">2019-07-26</time>
             </span>
           
 
@@ -1552,9 +1716,9 @@ class LiePinMongodb():
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="Modified: 2019-07-27 17:17:02" itemprop="dateModified" datetime="2019-07-27T17:17:02+08:00">2019-07-27</time>
+                <time title="Geändert am: 2019-07-27 17:17:02" itemprop="dateModified" datetime="2019-07-27T17:17:02+08:00">2019-07-27</time>
               </span>
             
           
@@ -1719,14 +1883,14 @@ class LiePinMongodb():
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">Veröffentlicht am</span>
               
 
               
                 
               
 
-              <time title="Created: 2019-07-25 13:41:14" itemprop="dateCreated datePublished" datetime="2019-07-25T13:41:14+08:00">2019-07-25</time>
+              <time title="Erstellt: 2019-07-25 13:41:14" itemprop="dateCreated datePublished" datetime="2019-07-25T13:41:14+08:00">2019-07-25</time>
             </span>
           
 
@@ -1739,9 +1903,9 @@ class LiePinMongodb():
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 
-                  <span class="post-meta-item-text">Edited on</span>
+                  <span class="post-meta-item-text">Bearbeitet am</span>
                 
-                <time title="Modified: 2019-07-27 17:17:06" itemprop="dateModified" datetime="2019-07-27T17:17:06+08:00">2019-07-27</time>
+                <time title="Geändert am: 2019-07-27 17:17:06" itemprop="dateModified" datetime="2019-07-27T17:17:06+08:00">2019-07-27</time>
               </span>
             
           
@@ -1865,180 +2029,11 @@ class LiePinMongodb():
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/24/爬虫中的xpath应用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ssc">
-      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to ssc bolg !">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/24/爬虫中的xpath应用/" class="post-title-link" itemprop="url">爬虫中的xpath应用</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-07-24 10:58:39 / Modified: 11:19:59" itemprop="dateCreated datePublished" datetime="2019-07-24T10:58:39+08:00">2019-07-24</time>
-            </span>
-          
-
-          
-            
-
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="xpath-是什么"><a href="#xpath-是什么" class="headerlink" title="xpath 是什么"></a>xpath 是什么</h2><p>xpath简单来说就是可以通过元素定位的方式获取到想要的标签字段。XPath (XML Path Language) 是一门在 HTML\XML 文档中查找信息的语言，可用来在 HTML\XML 文档中对元素和属性进行遍历。<br>W3School官方文档：<a href="http://www.w3school.com.cn/xpath/index.asp" target="_blank" rel="noopener">http://www.w3school.com.cn/xpath/index.asp</a></p>
-<h2 id="安装-xpath"><a href="#安装-xpath" class="headerlink" title="安装 xpath"></a>安装 xpath</h2><p>在安装xpath的时候要先安装lxml</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install lxml</span><br></pre></td></tr></table></figure>
-
-<h2 id="导入lxml包"><a href="#导入lxml包" class="headerlink" title="导入lxml包"></a>导入lxml包</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">from lxml import etree</span><br></pre></td></tr></table></figure>
-
-<p>利用etree.HTML，将字符串转化为Element对象,Element对象具有xpath的方法,返回结果的列表，能够接受bytes类型的数据和str类型的数据</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">html = etree.HTML(text) </span><br><span class="line">ret_list = html.xpath(<span class="string">"xpath字符串"</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="xpath-的基本使用"><a href="#xpath-的基本使用" class="headerlink" title="xpath 的基本使用"></a>xpath 的基本使用</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">选择所有的h1下的文本</span><br><span class="line">//h1/text()</span><br><span class="line">获取所有的a标签的href</span><br><span class="line">//a/@href</span><br><span class="line">获取html下的head下的title的文本</span><br><span class="line">/html/head/title/text()</span><br><span class="line">获取html下的head下的link标签的href</span><br><span class="line">/html/head/link/@href</span><br></pre></td></tr></table></figure>
-
-<h2 id="查找特定的节点"><a href="#查找特定的节点" class="headerlink" title="查找特定的节点"></a>查找特定的节点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//title[@lang=<span class="string">"eng"</span>]	选择lang属性值为eng的所有title元素</span><br><span class="line">/bookstore/book[1]	选取属于 bookstore 子元素的第一个 book 元素。</span><br><span class="line">/bookstore/book[last()]	选取属于 bookstore 子元素的最后一个 book 元素。</span><br><span class="line">/bookstore/book[last()-1]	选取属于 bookstore 子元素的倒数第二个 book 元素。</span><br><span class="line">/bookstore/book[position()&gt;1]	选择bookstore下面的book元素，从第二个开始选择</span><br><span class="line">//book/title[text()=<span class="string">'Harry Potter'</span>]	选择所有book下的title元素，仅仅选择文本为Harry Potter的title元素</span><br><span class="line">/bookstore/book[price&gt;35.00]/title	选取 bookstore 元素中的 book 元素的所有 title 元素，且其中的 price 元素的值须大于 35.00。</span><br></pre></td></tr></table></figure>
-
-<h2 id="xpath的学习重点"><a href="#xpath的学习重点" class="headerlink" title="xpath的学习重点"></a>xpath的学习重点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">定位元素</span><br><span class="line">路径分割符</span><br><span class="line">/: 单级查找</span><br><span class="line">用在最前面表示当前文档的根节点(标签)</span><br><span class="line">只能用于分割相邻的父子节点(标签)</span><br><span class="line">如: /html/head/meta</span><br><span class="line">//: 多级查找</span><br><span class="line">//a 查找整个文档中所有的a标签</span><br><span class="line">div//a 查找该div下所有的a标签</span><br><span class="line">过滤(筛选)元素</span><br><span class="line">a[@href]: 选取有herf属性的标签</span><br><span class="line">div[@id=<span class="string">'page'</span>]: 选取class属性为page的div标签</span><br><span class="line">a[text()=<span class="string">'下一页&gt;'</span>]: 选取文本内容为下一页的a标签</span><br><span class="line">a[2]: 选取匹配列表中第二个元素</span><br><span class="line">a[last()]: 选取匹配列表中最后一个</span><br><span class="line">a[position()&lt;4] 选取匹配列表中前3个</span><br><span class="line">a[position()&gt;4] 选取匹配列表中第4元素以后的</span><br><span class="line">获取内容</span><br><span class="line">a/text() 获取a标签中的文本内容</span><br><span class="line">a//text() 获取a标签中以及所有子类标签的内容</span><br><span class="line">a/@href 获取a标签中herf属性的值</span><br></pre></td></tr></table></figure>
-
-<h2 id="案例实验"><a href="#案例实验" class="headerlink" title="案例实验"></a>案例实验</h2><p>此爬虫写了很久了，网站应该有更新，如果直接复制可能使用不了，建议先看懂思路在修改源码</p>
-<p>爬取包图网的短视频</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">import requests,os</span><br><span class="line">from lxml import etree</span><br><span class="line">main_html = requests.get(r<span class="string">'https://ibaotu.com/shipin/'</span>)</span><br><span class="line">main_html.encoding = <span class="string">'utf-8'</span></span><br><span class="line">xml = etree.HTML(main_html.text)</span><br><span class="line">src_link = xml.xpath(<span class="string">'//div[@class="video-play"]/video/@src'</span>)</span><br><span class="line">title_link = xml.xpath(<span class="string">'//span[@class="video-title"]/text()'</span>)</span><br><span class="line">file = os.mkdir(r<span class="string">'./包图网视频'</span>)</span><br><span class="line"><span class="keyword">for</span> title,src <span class="keyword">in</span> zip(title_link,src_link):</span><br><span class="line">    link = requests.get(<span class="string">'https:'</span>+src)</span><br><span class="line">    with open(r<span class="string">'./包图网视频/'</span>+title+<span class="string">'.mp4'</span>,<span class="string">'wb'</span>) as f :</span><br><span class="line">        f.write(link.content)</span><br><span class="line">        <span class="built_in">print</span>(title)</span><br></pre></td></tr></table></figure>
-
-<p>以后博主会尽量退出有关视频的爬取与对手机app的数据采集，敬请留意更新！</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Nächste Seite"></i></a>
   </nav>
 
 
@@ -2081,8 +2076,8 @@ class LiePinMongodb():
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">Artikel</span>
         </a>
       </div>
     
@@ -2153,7 +2148,7 @@ class LiePinMongodb():
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
@@ -2161,7 +2156,7 @@ class LiePinMongodb():
 
 
 
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
 
 
 
