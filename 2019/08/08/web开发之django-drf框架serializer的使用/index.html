@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="china">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    fastclick: false,
+    lazyload: false,
+    pangu: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    }
+  };
+</script>
+
+  <meta name="description" content="django-drf配置环境创建django项目创建工程的命令为： 1django-admin startproject 工程名称  创建项目文件介绍settings.py 是项目的整体配置文件。urls.py 是项目的URL配置文件。wsgi.py 是项目与WSGI兼容的Web服务器入口。manage.py 是项目管理文件，通过它管理项目。 创建工程子应用： 进入刚才创建项目的文件中进行创建子应">
+<meta name="keywords" content="ssc_python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="web开发之django drf框架">
+<meta property="og:url" content="http://yoursite.com/2019/08/08/web开发之django-drf框架serializer的使用/index.html">
+<meta property="og:site_name" content="Welcome to ssc bolg !">
+<meta property="og:description" content="django-drf配置环境创建django项目创建工程的命令为： 1django-admin startproject 工程名称  创建项目文件介绍settings.py 是项目的整体配置文件。urls.py 是项目的URL配置文件。wsgi.py 是项目与WSGI兼容的Web服务器入口。manage.py 是项目管理文件，通过它管理项目。 创建工程子应用： 进入刚才创建项目的文件中进行创建子应">
+<meta property="og:locale" content="china">
+<meta property="og:image" content="http://yoursite.com/images/django-drf.jpg">
+<meta property="og:updated_time" content="2019-08-08T15:32:09.194Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="web开发之django drf框架">
+<meta name="twitter:description" content="django-drf配置环境创建django项目创建工程的命令为： 1django-admin startproject 工程名称  创建项目文件介绍settings.py 是项目的整体配置文件。urls.py 是项目的URL配置文件。wsgi.py 是项目与WSGI兼容的Web服务器入口。manage.py 是项目管理文件，通过它管理项目。 创建工程子应用： 进入刚才创建项目的文件中进行创建子应">
+<meta name="twitter:image" content="http://yoursite.com/images/django-drf.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/08/08/web开发之django-drf框架serializer的使用/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>web开发之django drf框架 | Welcome to ssc bolg !</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="china">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Welcome to ssc bolg !</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">ssc bolg</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/web开发之django-drf框架serializer的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">web开发之django drf框架
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-08-08 18:06:27 / Geändert am: 23:32:09" itemprop="dateCreated datePublished" datetime="2019-08-08T18:06:27+08:00">2019-08-08</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="django-drf配置环境"><a href="#django-drf配置环境" class="headerlink" title="django-drf配置环境"></a>django-drf配置环境</h1><h2 id="创建django项目"><a href="#创建django项目" class="headerlink" title="创建django项目"></a>创建django项目</h2><p>创建工程的命令为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject 工程名称</span><br></pre></td></tr></table></figure>
+
+<p>创建项目文件介绍<br>settings.py 是项目的整体配置文件。<br>urls.py 是项目的URL配置文件。<br>wsgi.py 是项目与WSGI兼容的Web服务器入口。<br>manage.py 是项目管理文件，通过它管理项目。</p>
+<p>创建工程子应用：</p>
+<p>进入刚才创建项目的文件中进行创建子应用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp 子应用名称</span><br></pre></td></tr></table></figure>
+
+<p>子应用目录说明<br>admin.py 文件跟网站的后台管理站点配置相关。<br>apps.py 文件用于配置当前子应用的相关信息。<br>migrations 目录用于存放数据库迁移历史文件。<br>models.py 文件用户保存数据库模型类。<br>tests.py 文件用于开发测试用例，编写单元测试。<br>views.py 文件用于编写Web应用视图。</p>
+<p>项目的启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver ip:端口</span><br><span class="line">或：</span><br><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
+
+<h2 id="drf环境安装与配置"><a href="#drf环境安装与配置" class="headerlink" title="drf环境安装与配置"></a>drf环境安装与配置</h2><p>1、安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework</span><br></pre></td></tr></table></figure>
+
+<p>2、添加rest_framework应用<br>我们利用在Django框架学习中创建的demo工程，在settings.py的INSTALLED_APPS中添加’rest_framework’。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">'rest_framework'</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以使用DRF进行开发了。</p>
+<h1 id="drf中的serializers序列化器的创建与使用"><a href="#drf中的serializers序列化器的创建与使用" class="headerlink" title="drf中的serializers序列化器的创建与使用"></a>drf中的serializers序列化器的创建与使用</h1><p>在对应的子应用中创建serializers.py的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># serializers.ModelSerializer是校验model里面有字段的数据</span></span><br><span class="line"></span><br><span class="line">from rest_framework import serializers</span><br><span class="line">class BookInfoSerializer(serializers.ModelSerializer):</span><br><span class="line">    <span class="string">""</span><span class="string">"图书数据序列化器"</span><span class="string">""</span></span><br><span class="line">    class Meta:</span><br><span class="line">        model = BookInfo</span><br><span class="line">        fields = <span class="string">'__all__'</span></span><br></pre></td></tr></table></figure>
+
+<p>model 指明该序列化器处理的数据字段从模型类BookInfo参考生成<br>fields 指明该序列化器包含模型类中的哪些字段，’<strong>all</strong>‘指明包含所有字段</p>
+<h3 id="基本定义方法与使用"><a href="#基本定义方法与使用" class="headerlink" title="基本定义方法与使用"></a>基本定义方法与使用</h3><p>1、定义方法<br>Django REST framework中的Serializer使用类来定义，须继承自rest_framework.serializers.Serializer。<br>例如，我们已有了一个数据库模型类BookInfo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先定义一个model类</span></span><br><span class="line">class BookInfo(models.Model):</span><br><span class="line">    btitle = models.CharField(max_length=20, verbose_name=<span class="string">'名称'</span>)</span><br><span class="line">    bpub_date = models.DateField(verbose_name=<span class="string">'发布日期'</span>, null=True)</span><br><span class="line">    bread = models.IntegerField(default=0, verbose_name=<span class="string">'阅读量'</span>)</span><br><span class="line">    bcomment = models.IntegerField(default=0, verbose_name=<span class="string">'评论量'</span>)</span><br><span class="line">    image = models.ImageField(upload_to=<span class="string">'booktest'</span>, verbose_name=<span class="string">'图片'</span>, null=True)</span><br></pre></td></tr></table></figure>
+
+<p>我们想为这个model类提供一个序列化器，可以定义如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># serializers.Serializer继承的是序列化器的普通类，是写了校验什么参数就校验什么参数</span></span><br><span class="line">from rest_framework import serializers</span><br><span class="line">class BookInfoSerializer(serializers.Serializer):</span><br><span class="line">    <span class="string">""</span><span class="string">"图书数据序列化器"</span><span class="string">""</span></span><br><span class="line">    id = serializers.IntegerField(label=<span class="string">'ID'</span>, read_only=True)</span><br><span class="line">    btitle = serializers.CharField(label=<span class="string">'名称'</span>, max_length=20)</span><br><span class="line">    bpub_date = serializers.DateField(label=<span class="string">'发布日期'</span>, required=False)</span><br><span class="line">    bread = serializers.IntegerField(label=<span class="string">'阅读量'</span>, required=False)</span><br><span class="line">    bcomment = serializers.IntegerField(label=<span class="string">'评论量'</span>, required=False)</span><br><span class="line">    image = serializers.ImageField(label=<span class="string">'图片'</span>, required=False)</span><br></pre></td></tr></table></figure>
+
+<p>注意：serializer不是只能为数据库模型类定义，也可以为非数据库模型类的数据定义。serializer是独立于数据库之外的存在。</p>
+<p><img src="/images/django-drf.jpg" alt="&quot;django通用参数&quot;"></p>
+<p>2、在view视图中创建Serializer对象</p>
+<p>定义好Serializer类后，就可以创建Serializer对象了。<br>Serializer的构造方法为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Serializer(instance=None, data=empty, **kwarg)</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：<br>1）用于序列化时，将模型类对象传入instance参数<br>2）用于反序列化时，将要被反序列化的数据传入data参数<br>3）除了instance和data参数外，在构造Serializer对象时，还可通过context参数额外添加数据，如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serializer = AccountSerializer(account, context=&#123;<span class="string">'request'</span>: request&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过context参数附加的数据，可以通过Serializer对象的context属性获取。"><a href="#通过context参数附加的数据，可以通过Serializer对象的context属性获取。" class="headerlink" title="通过context参数附加的数据，可以通过Serializer对象的context属性获取。"></a>通过context参数附加的数据，可以通过Serializer对象的context属性获取。</h3><h2 id="序列化使用"><a href="#序列化使用" class="headerlink" title="序列化使用"></a>序列化使用</h2><p>我们在django shell中来学习序列化器的使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py shell</span><br></pre></td></tr></table></figure>
+
+<p>1） 先查询出一个图书对象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from booktest.models import BookInfo</span><br><span class="line">book = BookInfo.objects.get(id=2)</span><br></pre></td></tr></table></figure>
+
+<p>2） 在view视图中构造序列化器对象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from booktest.serializers import BookInfoSerializer</span><br><span class="line">serializer = BookInfoSerializer(book)</span><br></pre></td></tr></table></figure>
+
+<p>3）获取序列化数据<br>通过data属性可以获取序列化后的数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">serializer.data</span><br><span class="line"><span class="comment"># &#123;'id': 2, 'btitle': '天龙八部', 'bpub_date': '1986-07-24', 'bread': 36, 'bcomment': 40, 'image': None&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>4）如果要被序列化的是包含多条数据的查询集QuerySet，可以通过添加many=True参数补充说明</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">book_qs = BookInfo.objects.all()</span><br><span class="line">serializer = BookInfoSerializer(book_qs, many=True)</span><br><span class="line">serializer.data</span><br></pre></td></tr></table></figure>
+
+<p>未完结</p>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/08/django框架中对数据库的基本操作/" rel="next" title="django框架中对数据库的基本操作">
+                <i class="fa fa-chevron-left"></i> django框架中对数据库的基本操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">ssc</p>
+  <div class="site-description motion-element" itemprop="description">关于ssc学习python的艰辛之旅</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#django-drf配置环境"><span class="nav-number">1.</span> <span class="nav-text">django-drf配置环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建django项目"><span class="nav-number">1.1.</span> <span class="nav-text">创建django项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#drf环境安装与配置"><span class="nav-number">1.2.</span> <span class="nav-text">drf环境安装与配置</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#drf中的serializers序列化器的创建与使用"><span class="nav-number">2.</span> <span class="nav-text">drf中的serializers序列化器的创建与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本定义方法与使用"><span class="nav-number">2.0.1.</span> <span class="nav-text">基本定义方法与使用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过context参数附加的数据，可以通过Serializer对象的context属性获取。"><span class="nav-number">2.0.2.</span> <span class="nav-text">通过context参数附加的数据，可以通过Serializer对象的context属性获取。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#序列化使用"><span class="nav-number">2.1.</span> <span class="nav-text">序列化使用</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+        <title>Live2D！把可爱的看板娘扑捉到你的博客去吧！</title>
+          <link rel="stylesheet" href="/live2d/css/live2d.css">
+      <div id="landlord">
+          <div class="message" style="opacity:0"></div>
+          <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+          <div class="hide-button">隐藏</div>
+      </div>
+      <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+      <script type="text/javascript">
+          var message_Path = '/live2d/'
+          var home_Path = 'https://www.baidu.com/'
+      </script>
+      <script type="text/javascript" src="/live2d/js/live2d.js"></script>
+      <script type="text/javascript" src="/live2d/js/message.js"></script>
+      <script type="text/javascript">
+          loadlive2d("live2d", "/live2d/model/tia/model.json");
+      </script>
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ssc</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>

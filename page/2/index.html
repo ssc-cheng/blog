@@ -288,6 +288,392 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/mongodb数据库的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/26/mongodb数据库的使用/" class="post-title-link" itemprop="url">mongodb数据库的使用</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-26 15:54:47" itemprop="dateCreated datePublished" datetime="2019-07-26T15:54:47+08:00">2019-07-26</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-07-27 17:17:02" itemprop="dateModified" datetime="2019-07-27T17:17:02+08:00">2019-07-27</time>
+              </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="mongodb安装配置"><a href="#mongodb安装配置" class="headerlink" title="mongodb安装配置"></a>mongodb安装配置</h2><p>在ubuntu系统中使用以下命令安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y mongodb-org</span><br></pre></td></tr></table></figure>
+
+<p>服务器的启动与配置</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">启动：sudo service mongodb start</span><br><span class="line">停止：sudo service mongodb stop</span><br><span class="line">重启：sudo service mongodb restart</span><br><span class="line">配置文件的位置：/etc/mongodb.conf，</span><br><span class="line">上面四个命令只有使用apt-get安装才有</span><br><span class="line">手动安装</span><br><span class="line"></span><br><span class="line">下载解压</span><br><span class="line">tar -zxvf mongodb-linux-x86_64-ubuntu1604-3.6.3.tgz</span><br><span class="line">移动到usr/<span class="built_in">local</span>目录下</span><br><span class="line">sudo mv mongodb-linux-x86_64-ubuntu1604-3.6.3 /usr/<span class="built_in">local</span>/mongodb</span><br><span class="line">把可以执行文件路径添加到<span class="variable">$PATH</span>变量下</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/mongodb/bin:<span class="variable">$PATH</span></span><br><span class="line">说明: 在 命令行执行只对当前窗口有效, 添加到.bashrc中每次启动都有效</span><br></pre></td></tr></table></figure>
+
+<h2 id="mongodb基本命令"><a href="#mongodb基本命令" class="headerlink" title="mongodb基本命令"></a>mongodb基本命令</h2><p>操作数据库命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查看当前的数据库：db</span><br><span class="line">查看所有的数据库：show dbs /show databases</span><br><span class="line">切换数据库：use db_name</span><br><span class="line">切换到没有的数据库, 添加数据会自动创建</span><br><span class="line">删除当前的数据库：db.dropDatabase()</span><br></pre></td></tr></table></figure>
+
+<p>操作集合命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">不手动创建集合：</span><br><span class="line">向不存在的集合中第⼀次加⼊数据时， 集合会被创建出来</span><br><span class="line">手动创建结合(了解)：</span><br><span class="line"></span><br><span class="line">db.createCollection(name,options)</span><br><span class="line">db.createCollection(<span class="string">"stu"</span>)</span><br><span class="line">db.createCollection(<span class="string">"sub"</span>, &#123; capped : <span class="literal">true</span>, size : 10 &#125; )</span><br><span class="line">参数capped： 默认值为<span class="literal">false</span>表示不设置上限,值为<span class="literal">true</span>表示设置上限</span><br><span class="line">参数size： 当capped值为<span class="literal">true</span>时， 需要指定此参数， 表示上限,单位为字节</span><br><span class="line">当档达到上限时， 会将之前的数据覆盖， 最早添加的数据移出, 其余上移, 最后添加在最后一条</span><br><span class="line">查看集合：show collections</span><br><span class="line">删除集合：db.集合名称.drop()</span><br></pre></td></tr></table></figure>
+
+<h2 id="mongodb中的数据类型"><a href="#mongodb中的数据类型" class="headerlink" title="mongodb中的数据类型"></a>mongodb中的数据类型</h2><p>String： 字符串， 最常使用 必须是有效的UTF-8<br>Boolean： 存储多个布尔值， true或false<br>Integer： 整数可以是32位或64位， 这取决于服务器<br>Double： 存储浮点值<br>Null： 存储Null值<br>Timestamp： 时间戳， 表示从1970-1-1到现在的总秒数<br>Date： 存储当前日期或时间的UNIX时间格式</p>
+<h2 id="mongodb的增删改查"><a href="#mongodb的增删改查" class="headerlink" title="mongodb的增删改查"></a>mongodb的增删改查</h2><p>插入数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.集合名称.insert(document)</span><br><span class="line">db.stu.insert(&#123;name:<span class="string">'gj'</span>,gender:1&#125;)</span><br><span class="line">db.stu.insert(&#123;_id:<span class="string">"20170101"</span>,name:<span class="string">'gj'</span>,gender:1&#125;)</span><br><span class="line">插入数据时，如果不指定_id参数， MongoDB会为自动分配ID</span><br><span class="line">插入单条指定为字典, 插入多条指定为列表</span><br></pre></td></tr></table></figure>
+
+<p>保存</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.集合名称.save(document)</span><br><span class="line">如果_id已经存在则修改， 如果⽂档的_id不存在则添加</span><br><span class="line">区别于: insert如果存在直接报错</span><br></pre></td></tr></table></figure>
+
+<p>简单查询</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.集合名称.find()</span><br></pre></td></tr></table></figure>
+
+<p>更新</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">语法: db.集合名称.update(&lt;query&gt; ,&lt;update&gt;,&#123;multi: &lt;boolean&gt;&#125;)</span><br><span class="line">参数query:查询条件</span><br><span class="line">参数update:更新操作符</span><br><span class="line">参数multi:可选， 默认是<span class="literal">false</span>，表示只更新找到的第⼀条记录， 值为<span class="literal">true</span>表示把满⾜条件的⽂档全部更新</span><br><span class="line">举例:</span><br><span class="line">db.stu.update(&#123;name:<span class="string">'hr'</span>&#125;,&#123;name:<span class="string">'mnc'</span>&#125;) 更新一条,没有更新的字段会丢弃.</span><br><span class="line">db.stu.update(&#123;name:<span class="string">'hr'</span>&#125;,&#123;<span class="variable">$set</span>:&#123;name:<span class="string">'hys'</span>&#125;&#125;) 更新一条</span><br><span class="line">db.stu.update(&#123;&#125;,&#123;<span class="variable">$set</span>:&#123;gender:0&#125;&#125;,&#123;multi:<span class="literal">true</span>&#125;) 更新全部</span><br><span class="line">注意：<span class="string">"multi update only works with $ operators"</span> 更新全部,必须使用<span class="variable">$set</span></span><br></pre></td></tr></table></figure>
+
+<p>删除</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">语法: db.集合名称.remove(&lt;query&gt;,&#123;justOne: &lt;boolean&gt;&#125;)</span><br><span class="line">参数query:可选，删除数据的条件</span><br><span class="line">参数justOne:可选， 如果设为<span class="literal">true</span>或1， 则只删除⼀条， 默认<span class="literal">false</span>， 表示删除多条</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/25/Selenium模拟请求爬取数据与防爬/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/25/Selenium模拟请求爬取数据与防爬/" class="post-title-link" itemprop="url">Selenium模拟请求爬取数据与反扒机制</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-07-25 13:41:14" itemprop="dateCreated datePublished" datetime="2019-07-25T13:41:14+08:00">2019-07-25</time>
+            </span>
+          
+
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-07-27 17:17:06" itemprop="dateModified" datetime="2019-07-27T17:17:06+08:00">2019-07-27</time>
+              </span>
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Selenium简介"><a href="#Selenium简介" class="headerlink" title="Selenium简介"></a>Selenium简介</h2><p>Selenium是一种自动化测试工具，它支持各种浏览器，包括 Chrome，Safari，Firefox 等主流界面式浏览器，如果你在这些浏览器里面安装一个 Selenium 的插件，那么便可以方便地实现Web界面的测试。换句话说叫 Selenium 支持这些浏览器驱动。<br>我们可以用Selenium来模拟正常用户浏览服务器的请求，实现简要的数据爬取。</p>
+<p>Selenium 安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
+
+<p>ChromeDriver下载安装:<br>注意下载的版本号要支持你的浏览器<br>淘宝镜像<br>ChromeDriver淘宝镜像：<a href="http://npm.taobao.org/" target="_blank" rel="noopener">http://npm.taobao.org/</a><br>注意查看chromedriver支持的版本 ：<a href="https://npm.taobao.org/mirrors/chromedriver/2.38/notes.txt" target="_blank" rel="noopener">https://npm.taobao.org/mirrors/chromedriver/2.38/notes.txt</a><br>Linux 或 Mac 解压后直接拷贝到usr/local/bin 或 usr/bin 下即可; 也可以制作软连接放到上面的两个路径下<br>在Linux或Mac中如果报关于Permission的错误, 是因为chromedriver这个文件没有执行权限, 就修改chromedriver文件的权限为 777<br>chmod 777 chromedriver</p>
+<h2 id="Selenium入门"><a href="#Selenium入门" class="headerlink" title="Selenium入门"></a>Selenium入门</h2><p>加载网页：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">driver = webdriver.Chrome()  如果是Windows()中传入driver的路径: “c:…/pantomjs.exe”</span><br><span class="line">driver.get(<span class="string">"http://www.baidu.com/"</span>) <span class="comment"># 加载页面 百度首页</span></span><br><span class="line">driver.save_screenshot(<span class="string">"baidu.png"</span>) <span class="comment"># 保存当前界面</span></span><br></pre></td></tr></table></figure>
+
+<p>定位和操作：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(“kw”).send_keys(“python”)   <span class="comment"># 找到id为kw的输入框, 填写: python</span></span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()  <span class="comment"># 找到id为su的, 进行单击</span></span><br></pre></td></tr></table></figure>
+
+<p>查看请求信息：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver.page_source   <span class="comment"># 获取页面的源码</span></span><br><span class="line">driver.get_cookies() <span class="comment"># 获取cookie信息</span></span><br><span class="line">driver.current_url   <span class="comment"># 获取当前的URL</span></span><br></pre></td></tr></table></figure>
+
+<p>这个比较少用到，主要看需求吧</p>
+<p>退出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.close() <span class="comment">#退出当前页面</span></span><br><span class="line">driver.quit() <span class="comment">#退出浏览器</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Selenium中操作cookie的方法"><a href="#Selenium中操作cookie的方法" class="headerlink" title="Selenium中操作cookie的方法"></a>Selenium中操作cookie的方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;cookie[‘name’]: cookie[‘value’] <span class="keyword">for</span> cookie <span class="keyword">in</span> driver.get_cookies()&#125;</span><br><span class="line">driver.delete_cookie(<span class="string">"CookieName"</span>)</span><br><span class="line">driver.delete_all_cookies()</span><br></pre></td></tr></table></figure>
+
+<h2 id="selenium定位页面元素"><a href="#selenium定位页面元素" class="headerlink" title="selenium定位页面元素"></a>selenium定位页面元素</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">find_element_by_id (返回一个,如果没有就报错了)</span><br><span class="line">find_elements_by_xpath （返回一个列表,如果没有就返回一个空列表）</span><br><span class="line">find_elements_by_link_text (根据文本内容返回元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_partial_link_text (根据文件部分内容返回元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_tag_name(根据标签名[节点名]返回元素元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_class_name(根据class属性对应值范围元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_css_selector(根据css选择器返回元素列表, 如果没有返回空列表)</span><br></pre></td></tr></table></figure>
+
+<p>具体用法自行百度搜索</p>
+<p>注意点:</p>
+<p>find_element 和find_elements的区别：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find_element: 返回找到第一个元素,如果没有报错</span><br><span class="line">find_elements: 返回找到的所有元素列表, 如果没有找到返回空列表</span><br></pre></td></tr></table></figure>
+
+<p>by_link_text和by_partial_link_text的区别：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">by_link_text: 全部文本都一样</span><br><span class="line">by_partial_link_text: 包含某个文本</span><br></pre></td></tr></table></figure>
+
+<p>by_link_text这个平常也很少用<br>by_xpath只能获取元素, 要获取属性和文本需要使用get_attribute(属性名) 和.text</p>
+<h2 id="Selenium处理反扒的措施"><a href="#Selenium处理反扒的措施" class="headerlink" title="Selenium处理反扒的措施"></a>Selenium处理反扒的措施</h2><p>解决办法就是——用webdirver接管我们自己打开的浏览器，然后再进行登录操作。</p>
+<p>文章参考：<br>Selenium的反扒环境配置：<a href="https://blog.csdn.net/qq_42206477/article/details/86477446?utm_source=app" target="_blank" rel="noopener">https://blog.csdn.net/qq_42206477/article/details/86477446?utm_source=app</a><br>具体的接管方法：<a href="https://www.cnblogs.com/HJkoma/p/9936434.html" target="_blank" rel="noopener">https://www.cnblogs.com/HJkoma/p/9936434.html</a></p>
+<h2 id="用Selenium爬取拉钩python的所有职位信息"><a href="#用Selenium爬取拉钩python的所有职位信息" class="headerlink" title="用Selenium爬取拉钩python的所有职位信息"></a>用Selenium爬取拉钩python的所有职位信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver import ActionChains</span><br><span class="line">import time,json,csv,re</span><br><span class="line"></span><br><span class="line">class LaGou():</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.drive = webdriver.Chrome()</span><br><span class="line">        self.ul = self.drive.get(r<span class="string">'https://www.lagou.com/jobs/list_java?city=%E5%B9%BF%E5%B7%9E&amp;cl=false&amp;fromSearch=true&amp;labelWords=&amp;suginput='</span>)</span><br><span class="line"></span><br><span class="line">    def gundong(self):  <span class="comment">#自动滚动页面</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(0, 10500, 500):</span><br><span class="line">            jsCode = <span class="string">"document.documentElement.scrollTop=%s"</span> % i</span><br><span class="line">            self.drive.execute_script(jsCode)</span><br><span class="line">            time.sleep(0.3)</span><br><span class="line"></span><br><span class="line">    def get_info(self):  <span class="comment">#获取页面详细信息</span></span><br><span class="line">        ul = self.drive.find_elements_by_xpath(r<span class="string">'//*[@id="s_position_list"]/ul//li'</span>)</span><br><span class="line">        user_info = []</span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> ul:</span><br><span class="line">            work = li.find_element_by_xpath(r<span class="string">".//h3"</span>).text</span><br><span class="line">            money = li.find_element_by_xpath(r<span class="string">".//div[@class='li_b_l']/span[@class='money']"</span>).text</span><br><span class="line">            xueli1 = li.find_element_by_xpath(r<span class="string">".//div[@class='p_bot']/div"</span>).text</span><br><span class="line">            xueli = re.search(r<span class="string">'/ (\w.*)'</span>, xueli1).group(1)</span><br><span class="line">            company_name = li.find_element_by_xpath(r<span class="string">".//div[@class='company_name']/a"</span>).text</span><br><span class="line">            user_info.append([work,money,xueli,company_name])</span><br><span class="line">        <span class="built_in">print</span>(user_info)</span><br><span class="line">        <span class="built_in">return</span> user_info</span><br><span class="line"></span><br><span class="line">    def mouser_clink(self):  <span class="comment">#鼠标点击事件</span></span><br><span class="line">        ac =self.drive.find_element_by_xpath(r<span class="string">"//div[@class='pager_container']/span[@class='pager_next ']"</span>)</span><br><span class="line">        ActionChains(self.drive).move_to_element(ac).click(ac).perform()</span><br><span class="line">    </span><br><span class="line">    def save(self,info):    <span class="comment">#保存数据，保存成Excel表中</span></span><br><span class="line">        with open(<span class="string">'java.csv'</span>, <span class="string">'w'</span>, newline=<span class="string">''</span>) as f:</span><br><span class="line">            writer = csv.writer(f)</span><br><span class="line">            writer.writerow([<span class="string">"工种"</span>,<span class="string">"薪酬"</span>,<span class="string">"学历"</span>,<span class="string">"公司名"</span>])</span><br><span class="line">            <span class="keyword">for</span> row <span class="keyword">in</span> info:</span><br><span class="line">                writer.writerows(info)<span class="comment"># 还可以写入多行</span></span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(30):</span><br><span class="line">            self.gundong()</span><br><span class="line">            info = self.get_info()</span><br><span class="line">            self.save(info)</span><br><span class="line">            self.mouser_clink()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    lagou = LaGou()</span><br><span class="line">    lagou.run()</span><br></pre></td></tr></table></figure>
+
+<h2 id="用Selenium爬取拼多多（添加对selenium的反扒）"><a href="#用Selenium爬取拼多多（添加对selenium的反扒）" class="headerlink" title="用Selenium爬取拼多多（添加对selenium的反扒）"></a>用Selenium爬取拼多多（添加对selenium的反扒）</h2><p>项目分析：<br>拼多多这个网站的反扒机制比较强烈，个人研究了一天了终于爬取部分数据。拼多多的网页版界面已经不再维护了，所以我换了个url<br>访问的url：<a href="http://mobile.yangkeduo.com/" target="_blank" rel="noopener">http://mobile.yangkeduo.com/</a></p>
+<p>前提是要配置好对selenium的接管操作，每次运行时都要在cmd窗口里运行：chrome.exe –remote-debugging-port=9222 –user-data-dir=”C:\selenum\AutomationProfile”</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver import ChromeOptions</span><br><span class="line">from selenium.webdriver.chrome.options import Options</span><br><span class="line">import time,requests,csv</span><br><span class="line"></span><br><span class="line">class Pinduoduo():</span><br><span class="line">    def __init__(self,con):</span><br><span class="line">        self.chrome_options = Options()</span><br><span class="line">        self.chrome_options.add_experimental_option(<span class="string">"debuggerAddress"</span>, <span class="string">"127.0.0.1:9222"</span>)</span><br><span class="line">        self.chrome_driver = r<span class="string">"C:\Users\Administrator.SKY-20190217ZDF\AppData\Local\Google\Chrome\Application\chrome.exe"</span></span><br><span class="line">        self.driver = webdriver.Chrome(options=self.chrome_options)</span><br><span class="line">        self.ul = self.driver.get(r<span class="string">"http://mobile.yangkeduo.com/search_result.html?search_key=&#123;&#125;"</span>.format(con))</span><br><span class="line"></span><br><span class="line">    def get_info(self):</span><br><span class="line">        self.urls = self.driver.find_elements_by_xpath(r<span class="string">"//div[@class='_2EdaAb7m']/div"</span>)</span><br><span class="line">        user_info = []</span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> self.urls:</span><br><span class="line">            try:</span><br><span class="line">                images = li.find_element_by_xpath(r<span class="string">".//div[@class='bqyzKuVp _2nXx5SjD']/img"</span>).get_attribute(<span class="string">"src"</span>)</span><br><span class="line">                title = li.find_element_by_xpath(r<span class="string">".//div[@class='troiqcp4 OSSkI8pu']"</span>).text</span><br><span class="line">                money = li.find_element_by_xpath(r<span class="string">".//div[@class='W2aG482G']"</span>).text</span><br><span class="line">                buysum = li.find_element_by_xpath(r<span class="string">".//span[@class='_2zosSFdU']"</span>).text</span><br><span class="line">                user_info.append([images,title,money,buysum])</span><br><span class="line">            except Exception:</span><br><span class="line">                pass</span><br><span class="line">        <span class="built_in">print</span>(user_info)</span><br><span class="line">        <span class="built_in">return</span> user_info</span><br><span class="line"></span><br><span class="line">    def save(self,info):</span><br><span class="line">        with open(<span class="string">'pinduoduo.csv'</span>, <span class="string">'a'</span>, newline=<span class="string">''</span>,encoding=<span class="string">"utf-8"</span>) as f:</span><br><span class="line">            writer = csv.writer(f)</span><br><span class="line">            writer.writerows(info)<span class="comment"># 还可以写入多行</span></span><br><span class="line"></span><br><span class="line">    def gun(self):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(0, 500000, 1000):</span><br><span class="line">            <span class="built_in">print</span>(i)</span><br><span class="line">            jsCode = <span class="string">"document.documentElement.scrollTop=%s"</span> % i</span><br><span class="line">            self.driver.execute_script(jsCode)</span><br><span class="line">            time.sleep(1)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    pin = Pinduoduo(<span class="string">"小白鞋"</span>)</span><br><span class="line">    pin.gun()</span><br><span class="line">    info = pin.get_info()</span><br><span class="line">    pin.save(info)</span><br></pre></td></tr></table></figure>
+
+<p>如果显示了登录界面就是你访问的次数多了。。。。。。。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/24/爬虫中的xpath应用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1333,7 +1719,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">Artikel</span>
         </a>
       </div>

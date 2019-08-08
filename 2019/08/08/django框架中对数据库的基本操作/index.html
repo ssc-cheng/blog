@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="china">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.2.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.2.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.2.0" color="#222">
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=7.2.0">
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.2.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    fastclick: false,
+    lazyload: false,
+    pangu: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    translation: {
+      copy_button: 'Kopieren',
+      copy_success: 'Kopiert',
+      copy_failure: 'Kopieren fehlgeschlagen'
+    }
+  };
+</script>
+
+  <meta name="description" content="1 增加1、save通过创建模型类对象，执行对象的save()方法保存到数据库中。 1234567891011121314151617181920&amp;gt;&amp;gt;&amp;gt; from datetime import date&amp;gt;&amp;gt;&amp;gt; book = BookInfo(    btitle=&apos;西游记&apos;,    bput_date=date(1988,1,1),    bread=10,">
+<meta name="keywords" content="ssc_python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="django框架中对数据库的基本操作">
+<meta property="og:url" content="http://yoursite.com/2019/08/08/django框架中对数据库的基本操作/index.html">
+<meta property="og:site_name" content="Welcome to ssc bolg !">
+<meta property="og:description" content="1 增加1、save通过创建模型类对象，执行对象的save()方法保存到数据库中。 1234567891011121314151617181920&amp;gt;&amp;gt;&amp;gt; from datetime import date&amp;gt;&amp;gt;&amp;gt; book = BookInfo(    btitle=&apos;西游记&apos;,    bput_date=date(1988,1,1),    bread=10,">
+<meta property="og:locale" content="china">
+<meta property="og:updated_time" content="2019-08-08T15:29:31.334Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="django框架中对数据库的基本操作">
+<meta name="twitter:description" content="1 增加1、save通过创建模型类对象，执行对象的save()方法保存到数据库中。 1234567891011121314151617181920&amp;gt;&amp;gt;&amp;gt; from datetime import date&amp;gt;&amp;gt;&amp;gt; book = BookInfo(    btitle=&apos;西游记&apos;,    bput_date=date(1988,1,1),    bread=10,">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://yoursite.com/2019/08/08/django框架中对数据库的基本操作/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  
+  <title>django框架中对数据库的基本操作 | Welcome to ssc bolg !</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="china">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Welcome to ssc bolg !</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">ssc bolg</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Navigationsleiste an/ausschalten">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Startseite</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archiv</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/django框架中对数据库的基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">django框架中对数据库的基本操作
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-08-08 15:11:04 / Geändert am: 23:29:31" itemprop="dateCreated datePublished" datetime="2019-08-08T15:11:04+08:00">2019-08-08</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-增加"><a href="#1-增加" class="headerlink" title="1 增加"></a>1 增加</h2><h3 id="1、save"><a href="#1、save" class="headerlink" title="1、save"></a>1、save</h3><p>通过创建模型类对象，执行对象的save()方法保存到数据库中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from datetime import date</span><br><span class="line">&gt;&gt;&gt; book = BookInfo(</span><br><span class="line">    btitle=<span class="string">'西游记'</span>,</span><br><span class="line">    bput_date=date(1988,1,1),</span><br><span class="line">    bread=10,</span><br><span class="line">    bcomment=10</span><br><span class="line">)</span><br><span class="line">&gt;&gt;&gt; book.save()</span><br><span class="line">&gt;&gt;&gt; hero = HeroInfo(</span><br><span class="line">    hname=<span class="string">'孙悟空'</span>,</span><br><span class="line">    hgender=0,</span><br><span class="line">    hbook=book</span><br><span class="line">)</span><br><span class="line">&gt;&gt;&gt; hero.save()</span><br><span class="line">&gt;&gt;&gt; hero2 = HeroInfo(</span><br><span class="line">    hname=<span class="string">'猪八戒'</span>,</span><br><span class="line">    hgender=0,</span><br><span class="line">    hbook_id=book.id</span><br><span class="line">)</span><br><span class="line">&gt;&gt;&gt; hero2.save()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、create"><a href="#2、create" class="headerlink" title="2、create"></a>2、create</h3><p>通过模型类.objects.create()保存。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; HeroInfo.objects.create(</span><br><span class="line">    hname=<span class="string">'沙悟净'</span>,</span><br><span class="line">    hgender=0,</span><br><span class="line">    hbook=book</span><br><span class="line">)</span><br><span class="line">&lt;HeroInfo: 沙悟净&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-查询"><a href="#2-查询" class="headerlink" title="2 查询"></a>2 查询</h2><h3 id="2-1-基本查询"><a href="#2-1-基本查询" class="headerlink" title="2.1 基本查询"></a>2.1 基本查询</h3><p>get 查询单一结果，如果不存在会抛出模型类.DoesNotExist异常。<br>all 查询多个结果。<br>count 查询结果数量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.all()</span><br><span class="line">&lt;QuerySet [&lt;BookInfo: 射雕英雄传&gt;, &lt;BookInfo: 天龙八部&gt;, &lt;BookInfo: 笑傲江湖&gt;, &lt;BookInfo: 雪山飞狐&gt;, &lt;BookInfo: 西游记&gt;]&gt;</span><br><span class="line">&gt;&gt;&gt; book = BookInfo.objects.get(btitle=<span class="string">'西游记'</span>)</span><br><span class="line">&gt;&gt;&gt; book.id</span><br><span class="line">5</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.get(id=3)</span><br><span class="line">&lt;BookInfo: 笑傲江湖&gt;</span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.get(pk=3)</span><br><span class="line">&lt;BookInfo: 笑傲江湖&gt;</span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.get(id=100)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;console&gt;"</span>, line 1, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/delron/.virtualenv/dj/lib/python3.6/site-packages/django/db/models/manager.py"</span>, line 85, <span class="keyword">in</span> manager_method</span><br><span class="line">    <span class="built_in">return</span> getattr(self.get_queryset(), name)(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/delron/.virtualenv/dj/lib/python3.6/site-packages/django/db/models/query.py"</span>, line 380, <span class="keyword">in</span> get</span><br><span class="line">    self.model._meta.object_name</span><br><span class="line">db.models.DoesNotExist: BookInfo matching query does not exist.</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.count()</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-过滤查询"><a href="#2-2-过滤查询" class="headerlink" title="2.2 过滤查询"></a>2.2 过滤查询</h3><p>filter 过滤出多个结果<br>exclude 排除掉符合条件剩下的结果<br>get 过滤单一结果<br>对于过滤条件的使用，上述三个方法相同，故仅以filter进行讲解。</p>
+<p>提示：<br>属性名称__比较运算符=值<br>属性名称和比较运算符间使用两个下划线，所以属性名不能包括多个下划线</p>
+<h3 id="1）相等"><a href="#1）相等" class="headerlink" title="1）相等"></a>1）相等</h3><p>exact：表示判等。<br>例：查询编号为1的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(id__exact=1)</span><br><span class="line">可简写为：</span><br><span class="line">BookInfo.objects.filter(id=1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2）模糊查询（注意一下的btitle是model中的字段）"><a href="#2）模糊查询（注意一下的btitle是model中的字段）" class="headerlink" title="2）模糊查询（注意一下的btitle是model中的字段）"></a>2）模糊查询（注意一下的btitle是model中的字段）</h3><p>contains：是否包含。<br>说明：如果要包含%无需转义，直接写即可。<br>例：查询书名包含’传’的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(btitle__contains=<span class="string">'传'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>startswith、endswith：以指定值开头或结尾。<br>例：查询书名以’部’结尾的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(btitle__endswith=<span class="string">'部'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>提示：<br>以上运算符都区分大小写，在这些运算符前加上i表示不区分大小写，如iexact、icontains、istartswith、iendswith.</p>
+<h3 id="3）-空查询"><a href="#3）-空查询" class="headerlink" title="3） 空查询"></a>3） 空查询</h3><p>isnull：是否为null。<br>例：查询书名不为空的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(btitle__isnull=False)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4）-范围查询"><a href="#4）-范围查询" class="headerlink" title="4） 范围查询"></a>4） 范围查询</h3><p>in：是否包含在范围内。<br>例：查询编号为1或3或5的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(id__in=[1, 3, 5])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5）比较查询"><a href="#5）比较查询" class="headerlink" title="5）比较查询"></a>5）比较查询</h3><p>gt 大于 (greater then)<br>gte 大于等于 (greater then equal)<br>lt 小于 (less then)<br>lte 小于等于 (less then equal)<br>例：查询编号大于3的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(id__gt=3)</span><br></pre></td></tr></table></figure>
+
+<p>不等于的运算符，使用exclude()过滤器。<br>例：查询编号不等于3的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.exclude(id=3)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6）日期查询"><a href="#6）日期查询" class="headerlink" title="6）日期查询"></a>6）日期查询</h3><p>year、month、day、week_day、hour、minute、second：对日期时间类型的属性进行运算。<br>例：查询1980年发表的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(bpub_date__year=1980)</span><br></pre></td></tr></table></figure>
+
+<p>例：查询1980年1月1日后发表的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(bpub_date__gt=date(1990, 1, 1))</span><br></pre></td></tr></table></figure>
+
+<h2 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h2><p>使用aggregate()过滤器调用聚合函数。聚合函数包括：Avg 平均，Count 数量，Max 最大，Min 最小，Sum 求和，被定义在django.db.models中。</p>
+<p>例：查询图书的总阅读量。</p>
+<pre><code class="bash">from django.db.models import Sum
+BookInfo.objects.aggregate(Sum(<span class="string">'bread'</span>))</code></pre>
+<p>注意aggregate的返回值是一个字典类型，格式如下：</p>
+<pre><code class="bash">{<span class="string">'属性名__聚合类小写'</span>:值}
+如:{<span class="string">'bread__sum'</span>:3}</code></pre>
+<p>使用count时一般不使用aggregate()过滤器。<br>例：查询图书总数。</p>
+<pre><code class="bash">BookInfo.objects.count()</code></pre>
+<p>注意count函数的返回值是一个数字。</p>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>使用order_by对结果进行排序</p>
+<pre><code class="bash">BookInfo.objects.all().order_by(<span class="string">'bread'</span>)  <span class="comment"># 升序</span>
+BookInfo.objects.all().order_by(<span class="string">'-bread'</span>)  <span class="comment"># 降序</span></code></pre>
+<h2 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h2><p>由一到多的访问语法：<br>一对应的模型类对象.多对应的模型类名小写_set 例：</p>
+<pre><code class="bash">b = BookInfo.objects.get(id=1)
+b.heroinfo_set.all()</code></pre>
+<p>由多到一的访问语法:<br>多对应的模型类对象.多对应的模型类中的关系类属性名 例：</p>
+<pre><code class="bash">h = HeroInfo.objects.get(id=1)
+h.hbook</code></pre>
+<p>访问一对应的模型类关联对象的id语法:<br>多对应的模型类对象.关联类属性_id，列：</p>
+<pre><code class="bash">h = HeroInfo.objects.get(id=1)
+h.hbook_id</code></pre>
+<h2 id="关联过滤查询"><a href="#关联过滤查询" class="headerlink" title="关联过滤查询"></a>关联过滤查询</h2><p>由多模型类条件查询一模型类数据:</p>
+<p>语法如下：</p>
+<pre><code class="bash">关联模型类名小写__属性名__条件运算符=值</code></pre>
+<p>注意：如果没有”__运算符”部分，表示等于。<br>例：<br>查询图书，要求图书英雄为”孙悟空”</p>
+<pre><code class="bash">BookInfo.objects.filter(heroinfo__hname=<span class="string">'孙悟空'</span>)</code></pre>
+<p>查询图书，要求图书中英雄的描述包含”八”</p>
+<pre><code class="bash">BookInfo.objects.filter(heroinfo__hcomment__contains=<span class="string">'八'</span>)</code></pre>
+<h2 id="3-修改"><a href="#3-修改" class="headerlink" title="3 修改"></a>3 修改</h2><p>修改更新有两种方法</p>
+<h3 id="1）save"><a href="#1）save" class="headerlink" title="1）save"></a>1）save</h3><p>修改模型类对象的属性，然后执行save()方法</p>
+<pre><code class="bash">hero = HeroInfo.objects.get(hname=<span class="string">'猪八戒'</span>)
+hero.hname = <span class="string">'猪悟能'</span>
+hero.save()</code></pre>
+<h3 id="2）update"><a href="#2）update" class="headerlink" title="2）update"></a>2）update</h3><p>使用模型类.objects.filter().update()，会返回受影响的行数</p>
+<pre><code class="bash">HeroInfo.objects.filter(hname=<span class="string">'沙悟净'</span>).update(hname=<span class="string">'沙僧'</span>)</code></pre>
+<h2 id="4-删除"><a href="#4-删除" class="headerlink" title="4 删除"></a>4 删除</h2><p>删除有两种方法</p>
+<h3 id="1）模型类对象delete"><a href="#1）模型类对象delete" class="headerlink" title="1）模型类对象delete"></a>1）模型类对象delete</h3><pre><code class="bash">hero = HeroInfo.objects.get(id=13)
+hero.delete()</code></pre>
+<h3 id="2）模型类-objects-filter-delete"><a href="#2）模型类-objects-filter-delete" class="headerlink" title="2）模型类.objects.filter().delete()"></a>2）模型类.objects.filter().delete()</h3><pre><code class="bash">HeroInfo.objects.filter(id=14).delete()</code></pre>
+
+      
+    </div>
+
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/07/破解js加密/" rel="next" title="破解js加密">
+                <i class="fa fa-chevron-left"></i> 破解js加密
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/08/08/web开发之django-drf框架serializer的使用/" rel="prev" title="web开发之django drf框架">
+                web开发之django drf框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Inhaltsverzeichnis
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Übersicht
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  
+  <p class="site-author-name" itemprop="name">ssc</p>
+  <div class="site-description motion-element" itemprop="description">关于ssc学习python的艰辛之旅</div>
+</div>
+
+
+  <nav class="site-state motion-element">
+    
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">Artikel</span>
+        </a>
+      </div>
+    
+
+    
+
+    
+  </nav>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+          
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-增加"><span class="nav-number">1.</span> <span class="nav-text">1 增加</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、save"><span class="nav-number">1.1.</span> <span class="nav-text">1、save</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、create"><span class="nav-number">1.2.</span> <span class="nav-text">2、create</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-查询"><span class="nav-number">2.</span> <span class="nav-text">2 查询</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-基本查询"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 基本查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-过滤查询"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 过滤查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1）相等"><span class="nav-number">2.3.</span> <span class="nav-text">1）相等</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）模糊查询（注意一下的btitle是model中的字段）"><span class="nav-number">2.4.</span> <span class="nav-text">2）模糊查询（注意一下的btitle是model中的字段）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3）-空查询"><span class="nav-number">2.5.</span> <span class="nav-text">3） 空查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4）-范围查询"><span class="nav-number">2.6.</span> <span class="nav-text">4） 范围查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5）比较查询"><span class="nav-number">2.7.</span> <span class="nav-text">5）比较查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6）日期查询"><span class="nav-number">2.8.</span> <span class="nav-text">6）日期查询</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#聚合函数"><span class="nav-number">3.</span> <span class="nav-text">聚合函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排序"><span class="nav-number">4.</span> <span class="nav-text">排序</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联查询"><span class="nav-number">5.</span> <span class="nav-text">关联查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关联过滤查询"><span class="nav-number">6.</span> <span class="nav-text">关联过滤查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-修改"><span class="nav-number">7.</span> <span class="nav-text">3 修改</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）save"><span class="nav-number">7.1.</span> <span class="nav-text">1）save</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）update"><span class="nav-number">7.2.</span> <span class="nav-text">2）update</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-删除"><span class="nav-number">8.</span> <span class="nav-text">4 删除</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1）模型类对象delete"><span class="nav-number">8.1.</span> <span class="nav-text">1）模型类对象delete</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2）模型类-objects-filter-delete"><span class="nav-number">8.2.</span> <span class="nav-text">2）模型类.objects.filter().delete()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+        <title>Live2D！把可爱的看板娘扑捉到你的博客去吧！</title>
+          <link rel="stylesheet" href="/live2d/css/live2d.css">
+      <div id="landlord">
+          <div class="message" style="opacity:0"></div>
+          <canvas id="live2d" width="280" height="250" class="live2d"></canvas>
+          <div class="hide-button">隐藏</div>
+      </div>
+      <script type="text/javascript" src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+      <script type="text/javascript">
+          var message_Path = '/live2d/'
+          var home_Path = 'https://www.baidu.com/'
+      </script>
+      <script type="text/javascript" src="/live2d/js/live2d.js"></script>
+      <script type="text/javascript" src="/live2d/js/message.js"></script>
+      <script type="text/javascript">
+          loadlive2d("live2d", "/live2d/model/tia/model.json");
+      </script>
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ssc</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Erstellt mit  <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Design – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.2.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+
+
+  <script src="/js/utils.js?v=7.2.0"></script>
+
+  <script src="/js/motion.js?v=7.2.0"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.2.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.2.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// GET RESPONSIVE HEIGHT PASSED FROM IFRAME
+
+window.addEventListener("message", function(e) {
+  var data = e.data;
+  if ((typeof data === 'string') && (data.indexOf('ciu_embed') > -1)) {
+    var featureID = data.split(':')[1];
+    var height = data.split(':')[2];
+    $(`iframe[data-feature=${featureID}]`).height(parseInt(height) + 30);
+  }
+}, false);
+</script>
+
+
+
+
+
+
+
+
+  
+
+</body>
+</html>

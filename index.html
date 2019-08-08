@@ -288,6 +288,437 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/web开发之django-drf框架serializer的使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/08/web开发之django-drf框架serializer的使用/" class="post-title-link" itemprop="url">web开发之django drf框架</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-08-08 18:06:27 / Geändert am: 23:32:09" itemprop="dateCreated datePublished" datetime="2019-08-08T18:06:27+08:00">2019-08-08</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="django-drf配置环境"><a href="#django-drf配置环境" class="headerlink" title="django-drf配置环境"></a>django-drf配置环境</h1><h2 id="创建django项目"><a href="#创建django项目" class="headerlink" title="创建django项目"></a>创建django项目</h2><p>创建工程的命令为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">django-admin startproject 工程名称</span><br></pre></td></tr></table></figure>
+
+<p>创建项目文件介绍<br>settings.py 是项目的整体配置文件。<br>urls.py 是项目的URL配置文件。<br>wsgi.py 是项目与WSGI兼容的Web服务器入口。<br>manage.py 是项目管理文件，通过它管理项目。</p>
+<p>创建工程子应用：</p>
+<p>进入刚才创建项目的文件中进行创建子应用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py startapp 子应用名称</span><br></pre></td></tr></table></figure>
+
+<p>子应用目录说明<br>admin.py 文件跟网站的后台管理站点配置相关。<br>apps.py 文件用于配置当前子应用的相关信息。<br>migrations 目录用于存放数据库迁移历史文件。<br>models.py 文件用户保存数据库模型类。<br>tests.py 文件用于开发测试用例，编写单元测试。<br>views.py 文件用于编写Web应用视图。</p>
+<p>项目的启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python manage.py runserver ip:端口</span><br><span class="line">或：</span><br><span class="line">python manage.py runserver</span><br></pre></td></tr></table></figure>
+
+<h2 id="drf环境安装与配置"><a href="#drf环境安装与配置" class="headerlink" title="drf环境安装与配置"></a>drf环境安装与配置</h2><p>1、安装</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework</span><br></pre></td></tr></table></figure>
+
+<p>2、添加rest_framework应用<br>我们利用在Django框架学习中创建的demo工程，在settings.py的INSTALLED_APPS中添加’rest_framework’。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    ...</span><br><span class="line">    <span class="string">'rest_framework'</span>,</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>接下来就可以使用DRF进行开发了。</p>
+<h1 id="drf中的serializers序列化器的创建与使用"><a href="#drf中的serializers序列化器的创建与使用" class="headerlink" title="drf中的serializers序列化器的创建与使用"></a>drf中的serializers序列化器的创建与使用</h1><p>在对应的子应用中创建serializers.py的文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># serializers.ModelSerializer是校验model里面有字段的数据</span></span><br><span class="line"></span><br><span class="line">from rest_framework import serializers</span><br><span class="line">class BookInfoSerializer(serializers.ModelSerializer):</span><br><span class="line">    <span class="string">""</span><span class="string">"图书数据序列化器"</span><span class="string">""</span></span><br><span class="line">    class Meta:</span><br><span class="line">        model = BookInfo</span><br><span class="line">        fields = <span class="string">'__all__'</span></span><br></pre></td></tr></table></figure>
+
+<p>model 指明该序列化器处理的数据字段从模型类BookInfo参考生成<br>fields 指明该序列化器包含模型类中的哪些字段，’<strong>all</strong>‘指明包含所有字段</p>
+<h3 id="基本定义方法与使用"><a href="#基本定义方法与使用" class="headerlink" title="基本定义方法与使用"></a>基本定义方法与使用</h3><p>1、定义方法<br>Django REST framework中的Serializer使用类来定义，须继承自rest_framework.serializers.Serializer。<br>例如，我们已有了一个数据库模型类BookInfo</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 先定义一个model类</span></span><br><span class="line">class BookInfo(models.Model):</span><br><span class="line">    btitle = models.CharField(max_length=20, verbose_name=<span class="string">'名称'</span>)</span><br><span class="line">    bpub_date = models.DateField(verbose_name=<span class="string">'发布日期'</span>, null=True)</span><br><span class="line">    bread = models.IntegerField(default=0, verbose_name=<span class="string">'阅读量'</span>)</span><br><span class="line">    bcomment = models.IntegerField(default=0, verbose_name=<span class="string">'评论量'</span>)</span><br><span class="line">    image = models.ImageField(upload_to=<span class="string">'booktest'</span>, verbose_name=<span class="string">'图片'</span>, null=True)</span><br></pre></td></tr></table></figure>
+
+<p>我们想为这个model类提供一个序列化器，可以定义如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># serializers.Serializer继承的是序列化器的普通类，是写了校验什么参数就校验什么参数</span></span><br><span class="line">from rest_framework import serializers</span><br><span class="line">class BookInfoSerializer(serializers.Serializer):</span><br><span class="line">    <span class="string">""</span><span class="string">"图书数据序列化器"</span><span class="string">""</span></span><br><span class="line">    id = serializers.IntegerField(label=<span class="string">'ID'</span>, read_only=True)</span><br><span class="line">    btitle = serializers.CharField(label=<span class="string">'名称'</span>, max_length=20)</span><br><span class="line">    bpub_date = serializers.DateField(label=<span class="string">'发布日期'</span>, required=False)</span><br><span class="line">    bread = serializers.IntegerField(label=<span class="string">'阅读量'</span>, required=False)</span><br><span class="line">    bcomment = serializers.IntegerField(label=<span class="string">'评论量'</span>, required=False)</span><br><span class="line">    image = serializers.ImageField(label=<span class="string">'图片'</span>, required=False)</span><br></pre></td></tr></table></figure>
+
+<p>注意：serializer不是只能为数据库模型类定义，也可以为非数据库模型类的数据定义。serializer是独立于数据库之外的存在。</p>
+<p><img src="/images/django-drf.jpg" alt="&quot;django通用参数&quot;"></p>
+<p>2、在view视图中创建Serializer对象</p>
+<p>定义好Serializer类后，就可以创建Serializer对象了。<br>Serializer的构造方法为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Serializer(instance=None, data=empty, **kwarg)</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：<br>1）用于序列化时，将模型类对象传入instance参数<br>2）用于反序列化时，将要被反序列化的数据传入data参数<br>3）除了instance和data参数外，在构造Serializer对象时，还可通过context参数额外添加数据，如</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">serializer = AccountSerializer(account, context=&#123;<span class="string">'request'</span>: request&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="通过context参数附加的数据，可以通过Serializer对象的context属性获取。"><a href="#通过context参数附加的数据，可以通过Serializer对象的context属性获取。" class="headerlink" title="通过context参数附加的数据，可以通过Serializer对象的context属性获取。"></a>通过context参数附加的数据，可以通过Serializer对象的context属性获取。</h3><h2 id="序列化使用"><a href="#序列化使用" class="headerlink" title="序列化使用"></a>序列化使用</h2><p>我们在django shell中来学习序列化器的使用。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python manage.py shell</span><br></pre></td></tr></table></figure>
+
+<p>1） 先查询出一个图书对象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from booktest.models import BookInfo</span><br><span class="line">book = BookInfo.objects.get(id=2)</span><br></pre></td></tr></table></figure>
+
+<p>2） 在view视图中构造序列化器对象</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">from booktest.serializers import BookInfoSerializer</span><br><span class="line">serializer = BookInfoSerializer(book)</span><br></pre></td></tr></table></figure>
+
+<p>3）获取序列化数据<br>通过data属性可以获取序列化后的数据</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">serializer.data</span><br><span class="line"><span class="comment"># &#123;'id': 2, 'btitle': '天龙八部', 'bpub_date': '1986-07-24', 'bread': 36, 'bcomment': 40, 'image': None&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>4）如果要被序列化的是包含多条数据的查询集QuerySet，可以通过添加many=True参数补充说明</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">book_qs = BookInfo.objects.all()</span><br><span class="line">serializer = BookInfoSerializer(book_qs, many=True)</span><br><span class="line">serializer.data</span><br></pre></td></tr></table></figure>
+
+<p>未完结</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/08/django框架中对数据库的基本操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ssc">
+      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Welcome to ssc bolg !">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/08/django框架中对数据库的基本操作/" class="post-title-link" itemprop="url">django框架中对数据库的基本操作</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Veröffentlicht am</span>
+              
+
+              
+                
+              
+
+              <time title="Erstellt: 2019-08-08 15:11:04 / Geändert am: 23:29:31" itemprop="dateCreated datePublished" datetime="2019-08-08T15:11:04+08:00">2019-08-08</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-增加"><a href="#1-增加" class="headerlink" title="1 增加"></a>1 增加</h2><h3 id="1、save"><a href="#1、save" class="headerlink" title="1、save"></a>1、save</h3><p>通过创建模型类对象，执行对象的save()方法保存到数据库中。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from datetime import date</span><br><span class="line">&gt;&gt;&gt; book = BookInfo(</span><br><span class="line">    btitle=<span class="string">'西游记'</span>,</span><br><span class="line">    bput_date=date(1988,1,1),</span><br><span class="line">    bread=10,</span><br><span class="line">    bcomment=10</span><br><span class="line">)</span><br><span class="line">&gt;&gt;&gt; book.save()</span><br><span class="line">&gt;&gt;&gt; hero = HeroInfo(</span><br><span class="line">    hname=<span class="string">'孙悟空'</span>,</span><br><span class="line">    hgender=0,</span><br><span class="line">    hbook=book</span><br><span class="line">)</span><br><span class="line">&gt;&gt;&gt; hero.save()</span><br><span class="line">&gt;&gt;&gt; hero2 = HeroInfo(</span><br><span class="line">    hname=<span class="string">'猪八戒'</span>,</span><br><span class="line">    hgender=0,</span><br><span class="line">    hbook_id=book.id</span><br><span class="line">)</span><br><span class="line">&gt;&gt;&gt; hero2.save()</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、create"><a href="#2、create" class="headerlink" title="2、create"></a>2、create</h3><p>通过模型类.objects.create()保存。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; HeroInfo.objects.create(</span><br><span class="line">    hname=<span class="string">'沙悟净'</span>,</span><br><span class="line">    hgender=0,</span><br><span class="line">    hbook=book</span><br><span class="line">)</span><br><span class="line">&lt;HeroInfo: 沙悟净&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-查询"><a href="#2-查询" class="headerlink" title="2 查询"></a>2 查询</h2><h3 id="2-1-基本查询"><a href="#2-1-基本查询" class="headerlink" title="2.1 基本查询"></a>2.1 基本查询</h3><p>get 查询单一结果，如果不存在会抛出模型类.DoesNotExist异常。<br>all 查询多个结果。<br>count 查询结果数量。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.all()</span><br><span class="line">&lt;QuerySet [&lt;BookInfo: 射雕英雄传&gt;, &lt;BookInfo: 天龙八部&gt;, &lt;BookInfo: 笑傲江湖&gt;, &lt;BookInfo: 雪山飞狐&gt;, &lt;BookInfo: 西游记&gt;]&gt;</span><br><span class="line">&gt;&gt;&gt; book = BookInfo.objects.get(btitle=<span class="string">'西游记'</span>)</span><br><span class="line">&gt;&gt;&gt; book.id</span><br><span class="line">5</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.get(id=3)</span><br><span class="line">&lt;BookInfo: 笑傲江湖&gt;</span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.get(pk=3)</span><br><span class="line">&lt;BookInfo: 笑傲江湖&gt;</span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.get(id=100)</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;console&gt;"</span>, line 1, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">  File <span class="string">"/Users/delron/.virtualenv/dj/lib/python3.6/site-packages/django/db/models/manager.py"</span>, line 85, <span class="keyword">in</span> manager_method</span><br><span class="line">    <span class="built_in">return</span> getattr(self.get_queryset(), name)(*args, **kwargs)</span><br><span class="line">  File <span class="string">"/Users/delron/.virtualenv/dj/lib/python3.6/site-packages/django/db/models/query.py"</span>, line 380, <span class="keyword">in</span> get</span><br><span class="line">    self.model._meta.object_name</span><br><span class="line">db.models.DoesNotExist: BookInfo matching query does not exist.</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; BookInfo.objects.count()</span><br><span class="line">6</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-过滤查询"><a href="#2-2-过滤查询" class="headerlink" title="2.2 过滤查询"></a>2.2 过滤查询</h3><p>filter 过滤出多个结果<br>exclude 排除掉符合条件剩下的结果<br>get 过滤单一结果<br>对于过滤条件的使用，上述三个方法相同，故仅以filter进行讲解。</p>
+<p>提示：<br>属性名称__比较运算符=值<br>属性名称和比较运算符间使用两个下划线，所以属性名不能包括多个下划线</p>
+<h3 id="1）相等"><a href="#1）相等" class="headerlink" title="1）相等"></a>1）相等</h3><p>exact：表示判等。<br>例：查询编号为1的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(id__exact=1)</span><br><span class="line">可简写为：</span><br><span class="line">BookInfo.objects.filter(id=1)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2）模糊查询（注意一下的btitle是model中的字段）"><a href="#2）模糊查询（注意一下的btitle是model中的字段）" class="headerlink" title="2）模糊查询（注意一下的btitle是model中的字段）"></a>2）模糊查询（注意一下的btitle是model中的字段）</h3><p>contains：是否包含。<br>说明：如果要包含%无需转义，直接写即可。<br>例：查询书名包含’传’的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(btitle__contains=<span class="string">'传'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>startswith、endswith：以指定值开头或结尾。<br>例：查询书名以’部’结尾的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(btitle__endswith=<span class="string">'部'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>提示：<br>以上运算符都区分大小写，在这些运算符前加上i表示不区分大小写，如iexact、icontains、istartswith、iendswith.</p>
+<h3 id="3）-空查询"><a href="#3）-空查询" class="headerlink" title="3） 空查询"></a>3） 空查询</h3><p>isnull：是否为null。<br>例：查询书名不为空的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(btitle__isnull=False)</span><br></pre></td></tr></table></figure>
+
+<h3 id="4）-范围查询"><a href="#4）-范围查询" class="headerlink" title="4） 范围查询"></a>4） 范围查询</h3><p>in：是否包含在范围内。<br>例：查询编号为1或3或5的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(id__in=[1, 3, 5])</span><br></pre></td></tr></table></figure>
+
+<h3 id="5）比较查询"><a href="#5）比较查询" class="headerlink" title="5）比较查询"></a>5）比较查询</h3><p>gt 大于 (greater then)<br>gte 大于等于 (greater then equal)<br>lt 小于 (less then)<br>lte 小于等于 (less then equal)<br>例：查询编号大于3的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(id__gt=3)</span><br></pre></td></tr></table></figure>
+
+<p>不等于的运算符，使用exclude()过滤器。<br>例：查询编号不等于3的图书</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.exclude(id=3)</span><br></pre></td></tr></table></figure>
+
+<h3 id="6）日期查询"><a href="#6）日期查询" class="headerlink" title="6）日期查询"></a>6）日期查询</h3><p>year、month、day、week_day、hour、minute、second：对日期时间类型的属性进行运算。<br>例：查询1980年发表的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(bpub_date__year=1980)</span><br></pre></td></tr></table></figure>
+
+<p>例：查询1980年1月1日后发表的图书。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">BookInfo.objects.filter(bpub_date__gt=date(1990, 1, 1))</span><br></pre></td></tr></table></figure>
+
+<h2 id="聚合函数"><a href="#聚合函数" class="headerlink" title="聚合函数"></a>聚合函数</h2><p>使用aggregate()过滤器调用聚合函数。聚合函数包括：Avg 平均，Count 数量，Max 最大，Min 最小，Sum 求和，被定义在django.db.models中。</p>
+<p>例：查询图书的总阅读量。</p>
+<pre><code class="bash">from django.db.models import Sum
+BookInfo.objects.aggregate(Sum(<span class="string">'bread'</span>))</code></pre>
+<p>注意aggregate的返回值是一个字典类型，格式如下：</p>
+<pre><code class="bash">{<span class="string">'属性名__聚合类小写'</span>:值}
+如:{<span class="string">'bread__sum'</span>:3}</code></pre>
+<p>使用count时一般不使用aggregate()过滤器。<br>例：查询图书总数。</p>
+<pre><code class="bash">BookInfo.objects.count()</code></pre>
+<p>注意count函数的返回值是一个数字。</p>
+<h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><p>使用order_by对结果进行排序</p>
+<pre><code class="bash">BookInfo.objects.all().order_by(<span class="string">'bread'</span>)  <span class="comment"># 升序</span>
+BookInfo.objects.all().order_by(<span class="string">'-bread'</span>)  <span class="comment"># 降序</span></code></pre>
+<h2 id="关联查询"><a href="#关联查询" class="headerlink" title="关联查询"></a>关联查询</h2><p>由一到多的访问语法：<br>一对应的模型类对象.多对应的模型类名小写_set 例：</p>
+<pre><code class="bash">b = BookInfo.objects.get(id=1)
+b.heroinfo_set.all()</code></pre>
+<p>由多到一的访问语法:<br>多对应的模型类对象.多对应的模型类中的关系类属性名 例：</p>
+<pre><code class="bash">h = HeroInfo.objects.get(id=1)
+h.hbook</code></pre>
+<p>访问一对应的模型类关联对象的id语法:<br>多对应的模型类对象.关联类属性_id，列：</p>
+<pre><code class="bash">h = HeroInfo.objects.get(id=1)
+h.hbook_id</code></pre>
+<h2 id="关联过滤查询"><a href="#关联过滤查询" class="headerlink" title="关联过滤查询"></a>关联过滤查询</h2><p>由多模型类条件查询一模型类数据:</p>
+<p>语法如下：</p>
+<pre><code class="bash">关联模型类名小写__属性名__条件运算符=值</code></pre>
+<p>注意：如果没有”__运算符”部分，表示等于。<br>例：<br>查询图书，要求图书英雄为”孙悟空”</p>
+<pre><code class="bash">BookInfo.objects.filter(heroinfo__hname=<span class="string">'孙悟空'</span>)</code></pre>
+<p>查询图书，要求图书中英雄的描述包含”八”</p>
+<pre><code class="bash">BookInfo.objects.filter(heroinfo__hcomment__contains=<span class="string">'八'</span>)</code></pre>
+<h2 id="3-修改"><a href="#3-修改" class="headerlink" title="3 修改"></a>3 修改</h2><p>修改更新有两种方法</p>
+<h3 id="1）save"><a href="#1）save" class="headerlink" title="1）save"></a>1）save</h3><p>修改模型类对象的属性，然后执行save()方法</p>
+<pre><code class="bash">hero = HeroInfo.objects.get(hname=<span class="string">'猪八戒'</span>)
+hero.hname = <span class="string">'猪悟能'</span>
+hero.save()</code></pre>
+<h3 id="2）update"><a href="#2）update" class="headerlink" title="2）update"></a>2）update</h3><p>使用模型类.objects.filter().update()，会返回受影响的行数</p>
+<pre><code class="bash">HeroInfo.objects.filter(hname=<span class="string">'沙悟净'</span>).update(hname=<span class="string">'沙僧'</span>)</code></pre>
+<h2 id="4-删除"><a href="#4-删除" class="headerlink" title="4 删除"></a>4 删除</h2><p>删除有两种方法</p>
+<h3 id="1）模型类对象delete"><a href="#1）模型类对象delete" class="headerlink" title="1）模型类对象delete"></a>1）模型类对象delete</h3><pre><code class="bash">hero = HeroInfo.objects.get(id=13)
+hero.delete()</code></pre>
+<h3 id="2）模型类-objects-filter-delete"><a href="#2）模型类-objects-filter-delete" class="headerlink" title="2）模型类.objects.filter().delete()"></a>2）模型类.objects.filter().delete()</h3><pre><code class="bash">HeroInfo.objects.filter(id=14).delete()</code></pre>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/07/破解js加密/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -333,13 +764,23 @@
                 
               
 
-              <time title="Erstellt: 2019-08-07 20:07:27 / Geändert am: 21:23:36" itemprop="dateCreated datePublished" datetime="2019-08-07T20:07:27+08:00">2019-08-07</time>
+              <time title="Erstellt: 2019-08-07 20:07:27" itemprop="dateCreated datePublished" datetime="2019-08-07T20:07:27+08:00">2019-08-07</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Bearbeitet am</span>
+                
+                <time title="Geändert am: 2019-08-08 18:11:46" itemprop="dateModified" datetime="2019-08-08T18:11:46+08:00">2019-08-08</time>
+              </span>
             
           
 
@@ -1646,392 +2087,6 @@ class LiePinMongodb():
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/26/mongodb数据库的使用/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ssc">
-      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to ssc bolg !">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/26/mongodb数据库的使用/" class="post-title-link" itemprop="url">mongodb数据库的使用</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-26 15:54:47" itemprop="dateCreated datePublished" datetime="2019-07-26T15:54:47+08:00">2019-07-26</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Bearbeitet am</span>
-                
-                <time title="Geändert am: 2019-07-27 17:17:02" itemprop="dateModified" datetime="2019-07-27T17:17:02+08:00">2019-07-27</time>
-              </span>
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="mongodb安装配置"><a href="#mongodb安装配置" class="headerlink" title="mongodb安装配置"></a>mongodb安装配置</h2><p>在ubuntu系统中使用以下命令安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y mongodb-org</span><br></pre></td></tr></table></figure>
-
-<p>服务器的启动与配置</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">启动：sudo service mongodb start</span><br><span class="line">停止：sudo service mongodb stop</span><br><span class="line">重启：sudo service mongodb restart</span><br><span class="line">配置文件的位置：/etc/mongodb.conf，</span><br><span class="line">上面四个命令只有使用apt-get安装才有</span><br><span class="line">手动安装</span><br><span class="line"></span><br><span class="line">下载解压</span><br><span class="line">tar -zxvf mongodb-linux-x86_64-ubuntu1604-3.6.3.tgz</span><br><span class="line">移动到usr/<span class="built_in">local</span>目录下</span><br><span class="line">sudo mv mongodb-linux-x86_64-ubuntu1604-3.6.3 /usr/<span class="built_in">local</span>/mongodb</span><br><span class="line">把可以执行文件路径添加到<span class="variable">$PATH</span>变量下</span><br><span class="line"><span class="built_in">export</span> PATH=/usr/<span class="built_in">local</span>/mongodb/bin:<span class="variable">$PATH</span></span><br><span class="line">说明: 在 命令行执行只对当前窗口有效, 添加到.bashrc中每次启动都有效</span><br></pre></td></tr></table></figure>
-
-<h2 id="mongodb基本命令"><a href="#mongodb基本命令" class="headerlink" title="mongodb基本命令"></a>mongodb基本命令</h2><p>操作数据库命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">查看当前的数据库：db</span><br><span class="line">查看所有的数据库：show dbs /show databases</span><br><span class="line">切换数据库：use db_name</span><br><span class="line">切换到没有的数据库, 添加数据会自动创建</span><br><span class="line">删除当前的数据库：db.dropDatabase()</span><br></pre></td></tr></table></figure>
-
-<p>操作集合命令</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">不手动创建集合：</span><br><span class="line">向不存在的集合中第⼀次加⼊数据时， 集合会被创建出来</span><br><span class="line">手动创建结合(了解)：</span><br><span class="line"></span><br><span class="line">db.createCollection(name,options)</span><br><span class="line">db.createCollection(<span class="string">"stu"</span>)</span><br><span class="line">db.createCollection(<span class="string">"sub"</span>, &#123; capped : <span class="literal">true</span>, size : 10 &#125; )</span><br><span class="line">参数capped： 默认值为<span class="literal">false</span>表示不设置上限,值为<span class="literal">true</span>表示设置上限</span><br><span class="line">参数size： 当capped值为<span class="literal">true</span>时， 需要指定此参数， 表示上限,单位为字节</span><br><span class="line">当档达到上限时， 会将之前的数据覆盖， 最早添加的数据移出, 其余上移, 最后添加在最后一条</span><br><span class="line">查看集合：show collections</span><br><span class="line">删除集合：db.集合名称.drop()</span><br></pre></td></tr></table></figure>
-
-<h2 id="mongodb中的数据类型"><a href="#mongodb中的数据类型" class="headerlink" title="mongodb中的数据类型"></a>mongodb中的数据类型</h2><p>String： 字符串， 最常使用 必须是有效的UTF-8<br>Boolean： 存储多个布尔值， true或false<br>Integer： 整数可以是32位或64位， 这取决于服务器<br>Double： 存储浮点值<br>Null： 存储Null值<br>Timestamp： 时间戳， 表示从1970-1-1到现在的总秒数<br>Date： 存储当前日期或时间的UNIX时间格式</p>
-<h2 id="mongodb的增删改查"><a href="#mongodb的增删改查" class="headerlink" title="mongodb的增删改查"></a>mongodb的增删改查</h2><p>插入数据</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.集合名称.insert(document)</span><br><span class="line">db.stu.insert(&#123;name:<span class="string">'gj'</span>,gender:1&#125;)</span><br><span class="line">db.stu.insert(&#123;_id:<span class="string">"20170101"</span>,name:<span class="string">'gj'</span>,gender:1&#125;)</span><br><span class="line">插入数据时，如果不指定_id参数， MongoDB会为自动分配ID</span><br><span class="line">插入单条指定为字典, 插入多条指定为列表</span><br></pre></td></tr></table></figure>
-
-<p>保存</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.集合名称.save(document)</span><br><span class="line">如果_id已经存在则修改， 如果⽂档的_id不存在则添加</span><br><span class="line">区别于: insert如果存在直接报错</span><br></pre></td></tr></table></figure>
-
-<p>简单查询</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.集合名称.find()</span><br></pre></td></tr></table></figure>
-
-<p>更新</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">语法: db.集合名称.update(&lt;query&gt; ,&lt;update&gt;,&#123;multi: &lt;boolean&gt;&#125;)</span><br><span class="line">参数query:查询条件</span><br><span class="line">参数update:更新操作符</span><br><span class="line">参数multi:可选， 默认是<span class="literal">false</span>，表示只更新找到的第⼀条记录， 值为<span class="literal">true</span>表示把满⾜条件的⽂档全部更新</span><br><span class="line">举例:</span><br><span class="line">db.stu.update(&#123;name:<span class="string">'hr'</span>&#125;,&#123;name:<span class="string">'mnc'</span>&#125;) 更新一条,没有更新的字段会丢弃.</span><br><span class="line">db.stu.update(&#123;name:<span class="string">'hr'</span>&#125;,&#123;<span class="variable">$set</span>:&#123;name:<span class="string">'hys'</span>&#125;&#125;) 更新一条</span><br><span class="line">db.stu.update(&#123;&#125;,&#123;<span class="variable">$set</span>:&#123;gender:0&#125;&#125;,&#123;multi:<span class="literal">true</span>&#125;) 更新全部</span><br><span class="line">注意：<span class="string">"multi update only works with $ operators"</span> 更新全部,必须使用<span class="variable">$set</span></span><br></pre></td></tr></table></figure>
-
-<p>删除</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">语法: db.集合名称.remove(&lt;query&gt;,&#123;justOne: &lt;boolean&gt;&#125;)</span><br><span class="line">参数query:可选，删除数据的条件</span><br><span class="line">参数justOne:可选， 如果设为<span class="literal">true</span>或1， 则只删除⼀条， 默认<span class="literal">false</span>， 表示删除多条</span><br></pre></td></tr></table></figure>
-
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/25/Selenium模拟请求爬取数据与防爬/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ssc">
-      <meta itemprop="description" content="关于ssc学习python的艰辛之旅">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Welcome to ssc bolg !">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/07/25/Selenium模拟请求爬取数据与防爬/" class="post-title-link" itemprop="url">Selenium模拟请求爬取数据与反扒机制</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-
-          
-          
-          
-
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Veröffentlicht am</span>
-              
-
-              
-                
-              
-
-              <time title="Erstellt: 2019-07-25 13:41:14" itemprop="dateCreated datePublished" datetime="2019-07-25T13:41:14+08:00">2019-07-25</time>
-            </span>
-          
-
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Bearbeitet am</span>
-                
-                <time title="Geändert am: 2019-07-27 17:17:06" itemprop="dateModified" datetime="2019-07-27T17:17:06+08:00">2019-07-27</time>
-              </span>
-            
-          
-
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          <br>
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Selenium简介"><a href="#Selenium简介" class="headerlink" title="Selenium简介"></a>Selenium简介</h2><p>Selenium是一种自动化测试工具，它支持各种浏览器，包括 Chrome，Safari，Firefox 等主流界面式浏览器，如果你在这些浏览器里面安装一个 Selenium 的插件，那么便可以方便地实现Web界面的测试。换句话说叫 Selenium 支持这些浏览器驱动。<br>我们可以用Selenium来模拟正常用户浏览服务器的请求，实现简要的数据爬取。</p>
-<p>Selenium 安装</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install selenium</span><br></pre></td></tr></table></figure>
-
-<p>ChromeDriver下载安装:<br>注意下载的版本号要支持你的浏览器<br>淘宝镜像<br>ChromeDriver淘宝镜像：<a href="http://npm.taobao.org/" target="_blank" rel="noopener">http://npm.taobao.org/</a><br>注意查看chromedriver支持的版本 ：<a href="https://npm.taobao.org/mirrors/chromedriver/2.38/notes.txt" target="_blank" rel="noopener">https://npm.taobao.org/mirrors/chromedriver/2.38/notes.txt</a><br>Linux 或 Mac 解压后直接拷贝到usr/local/bin 或 usr/bin 下即可; 也可以制作软连接放到上面的两个路径下<br>在Linux或Mac中如果报关于Permission的错误, 是因为chromedriver这个文件没有执行权限, 就修改chromedriver文件的权限为 777<br>chmod 777 chromedriver</p>
-<h2 id="Selenium入门"><a href="#Selenium入门" class="headerlink" title="Selenium入门"></a>Selenium入门</h2><p>加载网页：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">driver = webdriver.Chrome()  如果是Windows()中传入driver的路径: “c:…/pantomjs.exe”</span><br><span class="line">driver.get(<span class="string">"http://www.baidu.com/"</span>) <span class="comment"># 加载页面 百度首页</span></span><br><span class="line">driver.save_screenshot(<span class="string">"baidu.png"</span>) <span class="comment"># 保存当前界面</span></span><br></pre></td></tr></table></figure>
-
-<p>定位和操作：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.find_element_by_id(“kw”).send_keys(“python”)   <span class="comment"># 找到id为kw的输入框, 填写: python</span></span><br><span class="line">driver.find_element_by_id(<span class="string">"su"</span>).click()  <span class="comment"># 找到id为su的, 进行单击</span></span><br></pre></td></tr></table></figure>
-
-<p>查看请求信息：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">driver.page_source   <span class="comment"># 获取页面的源码</span></span><br><span class="line">driver.get_cookies() <span class="comment"># 获取cookie信息</span></span><br><span class="line">driver.current_url   <span class="comment"># 获取当前的URL</span></span><br></pre></td></tr></table></figure>
-
-<p>这个比较少用到，主要看需求吧</p>
-<p>退出</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">driver.close() <span class="comment">#退出当前页面</span></span><br><span class="line">driver.quit() <span class="comment">#退出浏览器</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="Selenium中操作cookie的方法"><a href="#Selenium中操作cookie的方法" class="headerlink" title="Selenium中操作cookie的方法"></a>Selenium中操作cookie的方法</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;cookie[‘name’]: cookie[‘value’] <span class="keyword">for</span> cookie <span class="keyword">in</span> driver.get_cookies()&#125;</span><br><span class="line">driver.delete_cookie(<span class="string">"CookieName"</span>)</span><br><span class="line">driver.delete_all_cookies()</span><br></pre></td></tr></table></figure>
-
-<h2 id="selenium定位页面元素"><a href="#selenium定位页面元素" class="headerlink" title="selenium定位页面元素"></a>selenium定位页面元素</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">find_element_by_id (返回一个,如果没有就报错了)</span><br><span class="line">find_elements_by_xpath （返回一个列表,如果没有就返回一个空列表）</span><br><span class="line">find_elements_by_link_text (根据文本内容返回元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_partial_link_text (根据文件部分内容返回元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_tag_name(根据标签名[节点名]返回元素元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_class_name(根据class属性对应值范围元素列表, 如果没有返回空列表)</span><br><span class="line">find_elements_by_css_selector(根据css选择器返回元素列表, 如果没有返回空列表)</span><br></pre></td></tr></table></figure>
-
-<p>具体用法自行百度搜索</p>
-<p>注意点:</p>
-<p>find_element 和find_elements的区别：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">find_element: 返回找到第一个元素,如果没有报错</span><br><span class="line">find_elements: 返回找到的所有元素列表, 如果没有找到返回空列表</span><br></pre></td></tr></table></figure>
-
-<p>by_link_text和by_partial_link_text的区别：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">by_link_text: 全部文本都一样</span><br><span class="line">by_partial_link_text: 包含某个文本</span><br></pre></td></tr></table></figure>
-
-<p>by_link_text这个平常也很少用<br>by_xpath只能获取元素, 要获取属性和文本需要使用get_attribute(属性名) 和.text</p>
-<h2 id="Selenium处理反扒的措施"><a href="#Selenium处理反扒的措施" class="headerlink" title="Selenium处理反扒的措施"></a>Selenium处理反扒的措施</h2><p>解决办法就是——用webdirver接管我们自己打开的浏览器，然后再进行登录操作。</p>
-<p>文章参考：<br>Selenium的反扒环境配置：<a href="https://blog.csdn.net/qq_42206477/article/details/86477446?utm_source=app" target="_blank" rel="noopener">https://blog.csdn.net/qq_42206477/article/details/86477446?utm_source=app</a><br>具体的接管方法：<a href="https://www.cnblogs.com/HJkoma/p/9936434.html" target="_blank" rel="noopener">https://www.cnblogs.com/HJkoma/p/9936434.html</a></p>
-<h2 id="用Selenium爬取拉钩python的所有职位信息"><a href="#用Selenium爬取拉钩python的所有职位信息" class="headerlink" title="用Selenium爬取拉钩python的所有职位信息"></a>用Selenium爬取拉钩python的所有职位信息</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver import ActionChains</span><br><span class="line">import time,json,csv,re</span><br><span class="line"></span><br><span class="line">class LaGou():</span><br><span class="line">    def __init__(self):</span><br><span class="line">        self.drive = webdriver.Chrome()</span><br><span class="line">        self.ul = self.drive.get(r<span class="string">'https://www.lagou.com/jobs/list_java?city=%E5%B9%BF%E5%B7%9E&amp;cl=false&amp;fromSearch=true&amp;labelWords=&amp;suginput='</span>)</span><br><span class="line"></span><br><span class="line">    def gundong(self):  <span class="comment">#自动滚动页面</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(0, 10500, 500):</span><br><span class="line">            jsCode = <span class="string">"document.documentElement.scrollTop=%s"</span> % i</span><br><span class="line">            self.drive.execute_script(jsCode)</span><br><span class="line">            time.sleep(0.3)</span><br><span class="line"></span><br><span class="line">    def get_info(self):  <span class="comment">#获取页面详细信息</span></span><br><span class="line">        ul = self.drive.find_elements_by_xpath(r<span class="string">'//*[@id="s_position_list"]/ul//li'</span>)</span><br><span class="line">        user_info = []</span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> ul:</span><br><span class="line">            work = li.find_element_by_xpath(r<span class="string">".//h3"</span>).text</span><br><span class="line">            money = li.find_element_by_xpath(r<span class="string">".//div[@class='li_b_l']/span[@class='money']"</span>).text</span><br><span class="line">            xueli1 = li.find_element_by_xpath(r<span class="string">".//div[@class='p_bot']/div"</span>).text</span><br><span class="line">            xueli = re.search(r<span class="string">'/ (\w.*)'</span>, xueli1).group(1)</span><br><span class="line">            company_name = li.find_element_by_xpath(r<span class="string">".//div[@class='company_name']/a"</span>).text</span><br><span class="line">            user_info.append([work,money,xueli,company_name])</span><br><span class="line">        <span class="built_in">print</span>(user_info)</span><br><span class="line">        <span class="built_in">return</span> user_info</span><br><span class="line"></span><br><span class="line">    def mouser_clink(self):  <span class="comment">#鼠标点击事件</span></span><br><span class="line">        ac =self.drive.find_element_by_xpath(r<span class="string">"//div[@class='pager_container']/span[@class='pager_next ']"</span>)</span><br><span class="line">        ActionChains(self.drive).move_to_element(ac).click(ac).perform()</span><br><span class="line">    </span><br><span class="line">    def save(self,info):    <span class="comment">#保存数据，保存成Excel表中</span></span><br><span class="line">        with open(<span class="string">'java.csv'</span>, <span class="string">'w'</span>, newline=<span class="string">''</span>) as f:</span><br><span class="line">            writer = csv.writer(f)</span><br><span class="line">            writer.writerow([<span class="string">"工种"</span>,<span class="string">"薪酬"</span>,<span class="string">"学历"</span>,<span class="string">"公司名"</span>])</span><br><span class="line">            <span class="keyword">for</span> row <span class="keyword">in</span> info:</span><br><span class="line">                writer.writerows(info)<span class="comment"># 还可以写入多行</span></span><br><span class="line"></span><br><span class="line">    def run(self):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(30):</span><br><span class="line">            self.gundong()</span><br><span class="line">            info = self.get_info()</span><br><span class="line">            self.save(info)</span><br><span class="line">            self.mouser_clink()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    lagou = LaGou()</span><br><span class="line">    lagou.run()</span><br></pre></td></tr></table></figure>
-
-<h2 id="用Selenium爬取拼多多（添加对selenium的反扒）"><a href="#用Selenium爬取拼多多（添加对selenium的反扒）" class="headerlink" title="用Selenium爬取拼多多（添加对selenium的反扒）"></a>用Selenium爬取拼多多（添加对selenium的反扒）</h2><p>项目分析：<br>拼多多这个网站的反扒机制比较强烈，个人研究了一天了终于爬取部分数据。拼多多的网页版界面已经不再维护了，所以我换了个url<br>访问的url：<a href="http://mobile.yangkeduo.com/" target="_blank" rel="noopener">http://mobile.yangkeduo.com/</a></p>
-<p>前提是要配置好对selenium的接管操作，每次运行时都要在cmd窗口里运行：chrome.exe –remote-debugging-port=9222 –user-data-dir=”C:\selenum\AutomationProfile”</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">from selenium import webdriver</span><br><span class="line">from selenium.webdriver import ChromeOptions</span><br><span class="line">from selenium.webdriver.chrome.options import Options</span><br><span class="line">import time,requests,csv</span><br><span class="line"></span><br><span class="line">class Pinduoduo():</span><br><span class="line">    def __init__(self,con):</span><br><span class="line">        self.chrome_options = Options()</span><br><span class="line">        self.chrome_options.add_experimental_option(<span class="string">"debuggerAddress"</span>, <span class="string">"127.0.0.1:9222"</span>)</span><br><span class="line">        self.chrome_driver = r<span class="string">"C:\Users\Administrator.SKY-20190217ZDF\AppData\Local\Google\Chrome\Application\chrome.exe"</span></span><br><span class="line">        self.driver = webdriver.Chrome(options=self.chrome_options)</span><br><span class="line">        self.ul = self.driver.get(r<span class="string">"http://mobile.yangkeduo.com/search_result.html?search_key=&#123;&#125;"</span>.format(con))</span><br><span class="line"></span><br><span class="line">    def get_info(self):</span><br><span class="line">        self.urls = self.driver.find_elements_by_xpath(r<span class="string">"//div[@class='_2EdaAb7m']/div"</span>)</span><br><span class="line">        user_info = []</span><br><span class="line">        <span class="keyword">for</span> li <span class="keyword">in</span> self.urls:</span><br><span class="line">            try:</span><br><span class="line">                images = li.find_element_by_xpath(r<span class="string">".//div[@class='bqyzKuVp _2nXx5SjD']/img"</span>).get_attribute(<span class="string">"src"</span>)</span><br><span class="line">                title = li.find_element_by_xpath(r<span class="string">".//div[@class='troiqcp4 OSSkI8pu']"</span>).text</span><br><span class="line">                money = li.find_element_by_xpath(r<span class="string">".//div[@class='W2aG482G']"</span>).text</span><br><span class="line">                buysum = li.find_element_by_xpath(r<span class="string">".//span[@class='_2zosSFdU']"</span>).text</span><br><span class="line">                user_info.append([images,title,money,buysum])</span><br><span class="line">            except Exception:</span><br><span class="line">                pass</span><br><span class="line">        <span class="built_in">print</span>(user_info)</span><br><span class="line">        <span class="built_in">return</span> user_info</span><br><span class="line"></span><br><span class="line">    def save(self,info):</span><br><span class="line">        with open(<span class="string">'pinduoduo.csv'</span>, <span class="string">'a'</span>, newline=<span class="string">''</span>,encoding=<span class="string">"utf-8"</span>) as f:</span><br><span class="line">            writer = csv.writer(f)</span><br><span class="line">            writer.writerows(info)<span class="comment"># 还可以写入多行</span></span><br><span class="line"></span><br><span class="line">    def gun(self):</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(0, 500000, 1000):</span><br><span class="line">            <span class="built_in">print</span>(i)</span><br><span class="line">            jsCode = <span class="string">"document.documentElement.scrollTop=%s"</span> % i</span><br><span class="line">            self.driver.execute_script(jsCode)</span><br><span class="line">            time.sleep(1)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    pin = Pinduoduo(<span class="string">"小白鞋"</span>)</span><br><span class="line">    pin.gun()</span><br><span class="line">    info = pin.get_info()</span><br><span class="line">    pin.save(info)</span><br></pre></td></tr></table></figure>
-
-<p>如果显示了登录界面就是你访问的次数多了。。。。。。。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2079,7 +2134,7 @@ class LiePinMongodb():
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">Artikel</span>
         </a>
       </div>
